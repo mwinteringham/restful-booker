@@ -17,4 +17,14 @@ router.post('/booking', function(req, res, next) {
   })
 })
 
+router.get('/booking', function(req, res, next) {
+	Booking.getAll(function(err, record){
+		if(err){
+			res.sendStatus(500);
+		} else {
+			res.send(record);
+		}
+	})
+})
+
 module.exports = router;

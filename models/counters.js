@@ -13,13 +13,11 @@ exports.bumpId = function(doc, callback){
             return next(error);
 
         if(counter){
-          doc.bookingid = counter.seq;
-          callback();
+          callback(counter.seq);
         } else {
           new Counter({type: 'bookingid', seq: 1}).save();
 
-          doc.bookingid = 1;
-          callback();
+          callback(1);
         }          
     });
 }

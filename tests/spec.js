@@ -32,6 +32,26 @@ describe('restful-booker', function () {
       .expect(201, done);
   });
 
+  it('responds with ', function testGetAllBookings(done){
+    payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-23', '2014-10-23');
+    payload2 = generatePayload('Barry', 'Brown', 111, true, 'Breakfast', '2013-02-23', '2014-10-23');
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .end(function(){
+        request(server)
+          .post('/booking')
+          .send(payload2)
+          .end(function(){
+            request(server)
+              .get('/booking')
+              .expect(200)
+              .expect([{"bookingid": 1},{"bookingid": 2}], done);
+          })
+      });
+  });
+
   it('responds with the created booking when POST to /booking', function testCreateBooking(done){
     payload = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-23', '2014-10-23');
     payloadWithId = payload;
@@ -42,7 +62,7 @@ describe('restful-booker', function () {
       .send(payload)
       .expect(200)
       .expect(payloadWithId, done);
-  })
+  });
 
   it('responds with a 500 error when a bad payload is POST to /booking', function testCreateBadBooking(done){
     payload = { 'lastname': 'Brown', 'totalprice': 111, 'depositpaid': true, 'additionalneeds': 'Breakfast', 'bookingdates': {
@@ -55,7 +75,7 @@ describe('restful-booker', function () {
       .post('/booking')
       .send(payload)
       .expect(500, done);
-  })
+  });
 
   it('responds with a 200 when a payload with too many params is POST to /booking', function testCreateExtraPayload(done){
     payload = generatePayload('Robert', 'Brown', 222, true, 'Breakfast', '2013-02-23', '2014-10-23');
@@ -65,7 +85,7 @@ describe('restful-booker', function () {
       .post('/booking')
       .send(payload)
       .expect(200, done);
-  })
+  });
 
   it('responds with the correct booking id when POSTing multiple payloads to /booking', function testBookingId(done){
     payload = generatePayload('Robert', 'Brown', 222, true, 'Breakfast', '2013-02-23', '2014-10-23');
@@ -74,7 +94,6 @@ describe('restful-booker', function () {
     request(server)
       .post('/booking')
       .send(payload)
-      .expect(200, done);
 
     request(server)
       .post('/booking')
@@ -83,7 +102,7 @@ describe('restful-booker', function () {
         res.body.bookingid = '2'
       })
       .end(done)
-  })
+  });
 
   it('404 everything else', function testPath(done) {
     request(server)

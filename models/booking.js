@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 mongoose.connect('mongodb://localhost/restful-booker2');
 
 var bookingSchema = mongoose.Schema({
-    bookingId: {type: Number},
+    bookingid: {type: Number},
     firstname: { type: String, required: true},
     lastname: { type: String, required: true},
     totalprice: { type: Number, required: true},
@@ -20,10 +20,25 @@ var bookingSchema = mongoose.Schema({
 var Booking = mongoose.model('Booking', bookingSchema);
 
 bookingSchema.pre('save', function(next) {
-    counter.bumpId(this, function(){
+    var doc = this;
+
+    counter.bumpId(doc, function(id){
+      doc.bookingid = id;
       next();
     });
 });
+
+exports.getAll = function(callback){
+  var query = {};
+
+  Booking.find(query).select('bookingid -_id').exec(function(err, doc){
+    if(err){
+      callback(err);
+    } else {
+      callback(null, doc);
+    }
+  });
+},
 
 exports.create = function(record, callback){
   var newBooking = new Booking(record);
