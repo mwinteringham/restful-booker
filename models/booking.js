@@ -28,9 +28,7 @@ bookingSchema.pre('save', function(next) {
     });
 });
 
-exports.getAll = function(callback){
-  var query = {};
-
+exports.getIDs = function(query, callback){
   Booking.find(query).select('bookingid -_id').exec(function(err, booking){
     if(err){
       callback(err);

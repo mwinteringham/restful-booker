@@ -10,9 +10,19 @@ router.get('/ping', function(req, res, next) {
 });
 
 router.get('/booking', function(req, res, next) {
-	Booking.getAll(function(err, record){
-		res.send(record);
-	})
+  var query = {};
+
+  if(typeof(req.query.checkin) != 'undefined'){
+    query["bookingdates.checkin"] = {$gt: new Date(req.query.checkin).toISOString()}
+  }
+
+  if(typeof(req.query.checkout) != 'undefined'){
+    query["bookingdates.checkout"] = {$lt: new Date(req.query.checkout).toISOString()}
+  }
+
+  Booking.getIDs(query, function(err, record){
+    res.send(record);
+  })
 });
 
 router.get('/booking/:id',function(req, res, next){

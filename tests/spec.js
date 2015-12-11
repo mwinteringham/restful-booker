@@ -60,6 +60,75 @@ describe('restful-booker - GET /booking', function () {
       });
   });
 
+  it('responds with a subset of booking ids when searching for checkin date', function testQueryString(done){
+    payload = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2014-10-23');
+    payload2 = generatePayload('Geoff', 'Brown', 111, true, 'Breakfast', '2013-02-02', '2014-10-23');
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .end(function(){
+        request(server)
+          .post('/booking')
+          .send(payload2)
+          .end(function(){
+            request(server)
+              .get('/booking?checkin=2013-02-01')
+              .expect(200)
+              .expect([{"bookingid": 2}])
+              .end(done)
+          })
+      })
+  });
+
+  it('responds with a subset of booking ids when searching for checkout date', function testQueryString(done){
+    payload = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-04');
+    payload2 = generatePayload('Geoff', 'Brown', 111, true, 'Breakfast', '2013-02-02', '2013-02-05');
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .end(function(){
+        request(server)
+          .post('/booking')
+          .send(payload2)
+          .end(function(){
+            request(server)
+              .get('/booking?checkout=2013-02-05')
+              .expect(200)
+              .expect([{"bookingid": 1}])
+              .end(done)
+          })
+      })
+  });
+
+  it('responds with a subset of booking ids when searching for checkin and checkout date', function testQueryString(done){
+    payload = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-04');
+    payload2 = generatePayload('Geoff', 'Brown', 111, true, 'Breakfast', '2013-02-02', '2013-02-05');
+    payload3 = generatePayload('Bob', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-06');
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .end(function(){
+        request(server)
+          .post('/booking')
+          .send(payload2)
+          .end(function(){
+            request(server)
+              .post('/booking')
+              .send(payload3)
+              .end(function(){
+                request(server)
+                  .get('/booking?checkin=2013-02-01&checkout=2013-02-06')
+                  .expect(200)
+                  .expect([{"bookingid": 2}])
+                  .end(done)
+              })
+          })
+      })
+  });
+
   it('resposds with a payload when GET /booking/{id}', function testGetOneBooking(done){
     payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-23', '2014-10-23');
 
@@ -72,7 +141,7 @@ describe('restful-booker - GET /booking', function () {
           .expect(200)
           .expect(payload, done)
       })
-  })
+  });
 
 });
 
