@@ -146,25 +146,31 @@ describe('restful-booker - GET /booking', function () {
       });
   });
 
-  // it('responds with a subset of booking ids when searching for name, checkin and checkout date', function testQueryString(done){
-  //   request(server)
-  //     .post('/booking')
-  //     .send(payload)
-  //     .then(function(){
-  //       return request(server)
-  //         .post('/booking')
-  //         .send(payload2)
-  //     }).then(function(){
-  //       return request(server)
-  //         .post('/booking')
-  //         .send(payload3)
-  //     }).then(function(){
-  //       request(server)
-  //         .get('/booking?firstname=Bob&lastname=Brown&checkin=2013-02-01&checkout=2013-02-0')
-  //         .expect(200)
-  //         .expect([{"bookingid": 2}], done)
-  //     })
-  // });
+  it('responds with a subset of booking ids when searching for name, checkin and checkout date', function testQueryString(done){
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        return request(server)
+          .post('/booking')
+          .send(payload2)
+      }).then(function(){
+        return request(server)
+          .post('/booking')
+          .send(payload3)
+      }).then(function(){
+        request(server)
+          .get('/booking?firstname=Geoff&lastname=White&checkin=2013-02-01&checkout=2013-02-06')
+          .expect(200)
+          .expect([{"bookingid": 2}], done)
+      })
+  });
+
+  it('responds with a 500 error when GET /booking with a bad date query string', function testGetWithBadDate(done){
+    request(server)
+      .get('/booking?checkout=2013-02-0')
+      .expect(500)
+  });
 
   it('responds with a payload when GET /booking/{id}', function testGetOneBooking(done){
     request(server)
