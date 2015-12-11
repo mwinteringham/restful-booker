@@ -12,6 +12,14 @@ router.get('/ping', function(req, res, next) {
 router.get('/booking', function(req, res, next) {
   var query = {};
 
+  if(typeof(req.query.firstname) != 'undefined'){
+    query.firstname = req.query.firstname
+  }
+
+  if(typeof(req.query.lastname) != 'undefined'){
+    query.lastname = req.query.lastname 
+  }
+
   if(typeof(req.query.checkin) != 'undefined'){
     query["bookingdates.checkin"] = {$gt: new Date(req.query.checkin).toISOString()}
   }
