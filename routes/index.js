@@ -9,51 +9,35 @@ router.get('/ping', function(req, res, next) {
 
 router.get('/booking', function(req, res, next) {
 	Booking.getAll(function(err, record){
-		if(err){
-			res.sendStatus(500);
-		} else {
-			res.send(record);
-		}
+		res.send(record);
 	})
 });
 
 router.get('/booking/:id',function(req, res, next){
   Booking.get(req.params.id, function(err, record){
-    if(err){
-      res.sendStatus(500);
+    if(record){
+      res.send(record);
     } else {
-      if(record){
-        res.send(record);
-      } else {
-        res.sendStatus(404)
-      }
+      res.sendStatus(404)
     }
   })
 });
 
 router.post('/booking', function(req, res, next) {
   Booking.create(req.body, function(err, record){
-    if(err){
-      res.sendStatus(500);
-    } else {
-      res.send(record);
-    }
+    res.send(record);
   })
 });
 
 router.put('/booking/:id', function(req, res, next) {
   Booking.update(req.params.id, req.body, function(err){
-    if(err){
-      res.sendStatus(500);
-    } else {
-      Booking.get(req.params.id, function(err, record){
-        if(record){
-          res.send(record);
-        } else {
-          res.sendStatus(404)
-        }
-      })
-    }
+    Booking.get(req.params.id, function(err, record){
+      if(record){
+        res.send(record);
+      } else {
+        res.sendStatus(404)
+      }
+    })
   })
 });
 
@@ -61,11 +45,7 @@ router.delete('/booking/:id', function(req, res, next) {
   Booking.get(req.params.id, function(err, record){
     if(record){
       Booking.delete(req.params.id, function(err){
-        if(err){
-          res.sendStatus(500);
-        } else {
           res.sendStatus(201);
-        }
       });
     } else {
       res.sendStatus(404);
