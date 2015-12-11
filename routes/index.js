@@ -1,5 +1,7 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router(),
+    parse      = require('../helpers/parser')
+    dateFormat = require('dateformat');
 
 var Booking = require('../models/booking');
 
@@ -16,7 +18,7 @@ router.get('/booking', function(req, res, next) {
 router.get('/booking/:id',function(req, res, next){
   Booking.get(req.params.id, function(err, record){
     if(record){
-      res.send(record);
+      res.send(parse.booking(record));
     } else {
       res.sendStatus(404)
     }
@@ -24,8 +26,17 @@ router.get('/booking/:id',function(req, res, next){
 });
 
 router.post('/booking', function(req, res, next) {
-  Booking.create(req.body, function(err, record){
-    res.send(record);
+  Booking.create(req.body, function(err, booking){
+    if(err)
+      res.sendStatus(500);
+    else {
+      var payload = {
+        "bookingid" : booking.bookingid,
+        "booking" : parse.booking(booking)
+      }
+
+      res.send(payload);
+    }
   })
 });
 
@@ -33,7 +44,7 @@ router.put('/booking/:id', function(req, res, next) {
   Booking.update(req.params.id, req.body, function(err){
     Booking.get(req.params.id, function(err, record){
       if(record){
-        res.send(record);
+        res.send(parse.booking(record));
       } else {
         res.sendStatus(404)
       }

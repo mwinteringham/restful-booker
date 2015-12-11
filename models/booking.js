@@ -31,47 +31,39 @@ bookingSchema.pre('save', function(next) {
 exports.getAll = function(callback){
   var query = {};
 
-  Booking.find(query).select('bookingid -_id').exec(function(err, doc){
+  Booking.find(query).select('bookingid -_id').exec(function(err, booking){
     if(err){
       callback(err);
     } else {
-      callback(null, doc);
+      callback(null, booking);
     }
   });
 },
 
 exports.get = function(id, callback){
-  Booking.find({'bookingid': id}, function(err, doc){
+  Booking.find({'bookingid': id}, function(err, booking){
     if(err){
       callback(err, null)
     } else {
-      var parsedBooking;
-
-      if (doc.length > 0) parsedBooking = parseBooking(doc[0]);
-      callback(null, parsedBooking);
+      callback(null, booking[0]);
     }
   })
 },
 
-exports.create = function(record, callback){
-  var newBooking = new Booking(record);
+exports.create = function(payload, callback){
+  var newBooking = new Booking(payload);
 
-  newBooking.save(function(err, doc){
+  newBooking.save(function(err, booking){
     if(err){
       callback(err);
     } else {
-      var payload = {
-        "bookingid" : doc.bookingid,
-        "booking" : parseBooking(doc)
-      }
-
-      callback(null, payload);
+      callback(null, booking);
     }
   });
 },
 
-exports.update = function(id, record, callback){
-  Booking.find({'bookingid': id}).update(record, function(err){
+exports.update = function(id, updatedBooking, callback){
+  Booking.find({'bookingid': id}).update(updatedBooking, function(err){
     callback(err);
   });
 },
@@ -84,23 +76,4 @@ exports.delete = function(id, callback){
       callback(null); 
     }
   })
-}
-
-var parseBooking = function(rawBooking){ 
-  var booking = {
-    'firstname' : rawBooking.firstname,
-    'lastname' : rawBooking.lastname,
-    'totalprice' : rawBooking.totalprice,
-    'depositpaid' : rawBooking.depositpaid,
-    'bookingdates' : {
-      'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-      'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
-    }
-  }
-
-  if(typeof(rawBooking.additionalneeds) !== 'undefined'){
-    booking.additionalneeds = rawBooking.additionalneeds;
-  }
-
-  return booking;
 }
