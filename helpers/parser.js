@@ -1,4 +1,5 @@
-var js2xmlparser = require("js2xmlparser");
+var js2xmlparser = require("js2xmlparser"),
+    dateFormat = require('dateformat');
 
 exports.booking = function(accept, rawBooking){
 	var booking = {

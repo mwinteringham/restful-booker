@@ -220,6 +220,19 @@ describe('restful-booker - POST /booking', function () {
       .expect({"bookingid": 1, "booking" : payload}, done);
   });
 
+  it('responds with the created booking and assigned booking id when sent an XML payload', function testCreateBooking(done){
+    var xmlPayload = js2xmlparser('booking', payload)
+
+    console.log(xmlPayload);
+
+    request(server)
+      .post('/booking')
+      .set('Content-type', 'text/xml')
+      .send(xmlPayload)
+      .expect(200)
+      .expect({"bookingid": 1, "booking" : payload}, done);
+  });
+
   it('responds with a 500 error when a bad payload is sent', function testCreateBadBooking(done){
     badpayload = { 'lastname': 'Brown', 'totalprice': 111, 'depositpaid': true, 'additionalneeds': 'Breakfast'}
 
@@ -277,6 +290,24 @@ describe('restful-booker - PUT /booking', function () {
         request(server)
           .put('/booking/1')
           .send(payload2)
+          .expect(200)
+          .expect(payload2, done);
+      })
+  });
+
+  it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
+    var xmlPayload = js2xmlparser('booking', payload2)
+
+    console.log(xmlPayload);
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        request(server)
+          .put('/booking/1')
+          .set('Content-type', 'text/xml')
+          .send(xmlPayload)
           .expect(200)
           .expect(payload2, done);
       })

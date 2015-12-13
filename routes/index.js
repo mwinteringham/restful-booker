@@ -1,7 +1,6 @@
 var express = require('express');
-var router = express.Router(),
-    parse      = require('../helpers/parser')
-    dateFormat = require('dateformat');
+var router  = express.Router(),
+    parse   = require('../helpers/parser');
 
 var Booking = require('../models/booking');
 
@@ -44,7 +43,11 @@ router.get('/booking/:id',function(req, res, next){
 });
 
 router.post('/booking', function(req, res, next) {
-  Booking.create(req.body, function(err, booking){
+  newBooking = req.body;
+
+  if(req.headers['content-type'] === 'text/xml') newBooking = newBooking.booking;
+
+  Booking.create(newBooking, function(err, booking){
     if(err)
       res.sendStatus(500);
     else {
