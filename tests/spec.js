@@ -1,23 +1,29 @@
-var request  = require('supertest-as-promised'),
-    expect   = require('chai').expect,
-    should   = require('chai').should(),
-    mongoose = require('mongoose'),
-    assert   = require('assert');
+var request      = require('supertest-as-promised'),
+    expect       = require('chai').expect,
+    should       = require('chai').should(),
+    mongoose     = require('mongoose'),
+    js2xmlparser = require("js2xmlparser"),
+    assert       = require('assert');
 
 mongoose.createConnection('mongodb://localhost/restful-booker2');
 
 var generatePayload = function(firstname, lastname, totalprice, depositpaid, additionalneeds, checkin, checkout){
-  return {
+  var payload = {
       'firstname': firstname,
       'lastname': lastname,
       'totalprice': totalprice,
       'depositpaid': depositpaid,
-      'additionalneeds': additionalneeds,
       'bookingdates': {
         'checkin': checkin,
         'checkout': checkout
       }
     }
+
+  if(typeof(additionalneeds) !== 'undefined'){
+    payload.additionalneeds = additionalneeds;
+  }
+
+  return payload
 }
 
 var payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-04'),
@@ -169,7 +175,7 @@ describe('restful-booker - GET /booking', function () {
   it('responds with a 500 error when GET /booking with a bad date query string', function testGetWithBadDate(done){
     request(server)
       .get('/booking?checkout=2013-02-0')
-      .expect(500)
+      .expect(500, done)
   });
 
   it('responds with a payload when GET /booking/{id}', function testGetOneBooking(done){
@@ -181,6 +187,21 @@ describe('restful-booker - GET /booking', function () {
           .get('/booking/1')
           .expect(200)
           .expect(payload, done)
+      });
+  });
+
+  it('responds with an XML payload when GET /booking/{id} with accept application/xml', function testGetWithXMLAccept(done){
+    xmlPayload = js2xmlparser('booking', payload)
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        request(server)
+          .get('/booking/1')
+          .set('Accept', 'application/xml')
+          .expect(200)
+          .expect(xmlPayload, done)
       });
   });
 
@@ -233,6 +254,17 @@ describe('restful-booker - POST /booking', function () {
           .end(done)
       })
   });
+
+  it('responds with an XML payload when POST /booking/ with accept application/xml', function testGetWithXMLAccept(done){
+    var xmlPayload = js2xmlparser('created-booking', { "bookingid": 1, "booking": payload2 })
+
+    request(server)
+      .post('/booking')
+      .set('Accept', 'application/xml')
+      .send(payload2)
+      .expect(200)
+      .expect(xmlPayload, done);
+  });
 });
 
 describe('restful-booker - PUT /booking', function () {
@@ -250,6 +282,21 @@ describe('restful-booker - PUT /booking', function () {
       })
   });
 
+  it('responds with an XML payload when PUT /booking with accept application/xml', function testPutWithXMLAccept(done){
+    xmlPayload = js2xmlparser('booking', payload2)
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        request(server)
+          .put('/booking/1')
+          .set('Accept', 'application/xml')
+          .send(payload2)
+          .expect(200)
+          .expect(xmlPayload, done);
+      })
+  });
 });
 
 describe('restful-booker DELETE /booking', function(){

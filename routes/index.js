@@ -36,7 +36,7 @@ router.get('/booking', function(req, res, next) {
 router.get('/booking/:id',function(req, res, next){
   Booking.get(req.params.id, function(err, record){
     if(record){
-      res.send(parse.booking(record));
+      res.send(parse.booking(req.headers.accept, record));
     } else {
       res.sendStatus(404)
     }
@@ -48,12 +48,7 @@ router.post('/booking', function(req, res, next) {
     if(err)
       res.sendStatus(500);
     else {
-      var payload = {
-        "bookingid" : booking.bookingid,
-        "booking" : parse.booking(booking)
-      }
-
-      res.send(payload);
+      res.send(parse.bookingWithId(req.headers.accept, booking));
     }
   })
 });
@@ -62,7 +57,7 @@ router.put('/booking/:id', function(req, res, next) {
   Booking.update(req.params.id, req.body, function(err){
     Booking.get(req.params.id, function(err, record){
       if(record){
-        res.send(parse.booking(record));
+        res.send(parse.booking(req.headers.accept, record));
       } else {
         res.sendStatus(404)
       }
