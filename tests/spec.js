@@ -3,7 +3,8 @@ var request      = require('supertest-as-promised'),
     should       = require('chai').should(),
     mongoose     = require('mongoose'),
     js2xmlparser = require("js2xmlparser"),
-    assert       = require('assert');
+    assert       = require('assert'),
+    chai         = require('chai').should();
 
 mongoose.createConnection('mongodb://localhost/restful-booker2');
 
@@ -223,8 +224,6 @@ describe('restful-booker - POST /booking', function () {
   it('responds with the created booking and assigned booking id when sent an XML payload', function testCreateBooking(done){
     var xmlPayload = js2xmlparser('booking', payload)
 
-    console.log(xmlPayload);
-
     request(server)
       .post('/booking')
       .set('Content-type', 'text/xml')
@@ -298,8 +297,6 @@ describe('restful-booker - PUT /booking', function () {
   it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
     var xmlPayload = js2xmlparser('booking', payload2)
 
-    console.log(xmlPayload);
-
     request(server)
       .post('/booking')
       .send(payload)
@@ -348,3 +345,29 @@ describe('restful-booker DELETE /booking', function(){
   });
 
 });
+
+describe('restful-booker POST /auth', function(){
+
+  it('responds with a 200 and a token to use when POSTing a valid credential', function testAuthReturnsToken(done){
+    request(server)
+      .post('/auth')
+      .send({'username': 'admin', 'password': 'password123'})
+      .expect(200)
+      .expect(function(res){
+        res.body.should.have.property('token').and.to.match(/[a-zA-Z0-9]{15,}/);
+      })
+      .end(done)
+  })
+
+  it('responds with a 200 and a message informing of login failed when POSTing invalid credential', function testAuthReturnsError(done){
+    request(server)
+      .post('/auth')
+      .send({'username': 'nimda', 'password': '321drowssap'})
+      .expect(200)
+      .expect(function(res){
+        res.body.should.have.property('reason').and.to.equal('Bad credentials');
+      })
+      .end(done)
+  })
+
+})

@@ -1,6 +1,7 @@
 var express = require('express');
 var router  = express.Router(),
-    parse   = require('../helpers/parser');
+    parse   = require('../helpers/parser'),
+    crypto = require('crypto');
 
 var Booking = require('../models/booking');
 
@@ -79,5 +80,17 @@ router.delete('/booking/:id', function(req, res, next) {
     }
   });
 });
+
+router.post('/auth', function(req, res, next){
+  if(req.body.username === "admin" && req.body.password === "password123"){
+    var token = crypto.randomBytes(Math.ceil(15/2))
+                    .toString('hex')
+                    .slice(0,15);
+
+    res.send({'token': token});
+  } else {
+    res.send({'reason': 'Bad credentials'});
+  }
+})
 
 module.exports = router;
