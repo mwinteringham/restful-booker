@@ -215,7 +215,7 @@ PUT /booking/1
 ##### Accept: application/json
 ```
 {
-    "_id": "1",
+    "id": "1",
     "firstname": "Sally",
     "lastname": "Brown",
     "totalprice": 111,
