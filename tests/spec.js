@@ -45,6 +45,16 @@ describe('restful-booker', function () {
       .get('/foo/bar')
       .expect(404, done);
   });
+
+  it('should startup with 10 records', function testRandomGenerator(done){
+    request(server)
+      .get('/booking')
+      .send(payload)
+      .expect(function(res){
+        assert.equal(res.body.length, 10)
+      })
+      .end(done);
+  })
 });
 
 describe('restful-booker - GET /booking', function () {

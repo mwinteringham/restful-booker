@@ -3,7 +3,20 @@ var router  = express.Router(),
     parse   = require('../helpers/parser'),
     crypto = require('crypto'),
     Booking = require('../models/booking'),
+    creator = require('../helpers/bookingcreator');
     globalLogins = {};
+
+Booking.deleteAll(function(err){
+  if(err) return console.error(err);
+  
+  for(i = 0; i < 10; i++){
+    var newBooking = creator.createBooking()
+
+    Booking.create(newBooking, function(err, result){
+      if(err) return console.error(err);
+    });
+  }
+})
 
 router.get('/ping', function(req, res, next) {
   res.sendStatus(201);

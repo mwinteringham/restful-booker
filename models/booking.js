@@ -68,10 +68,12 @@ exports.update = function(id, updatedBooking, callback){
 
 exports.delete = function(id, callback){
   Booking.remove({'bookingid': id}, function(err){
-    if(err){
-      callback(err);
-    } else {  
-      callback(null); 
-    }
+    callback(null);
+  })
+}
+
+exports.deleteAll = function(callback){
+  Booking.remove({}, function(err){
+    callback(null); 
   })
 }
