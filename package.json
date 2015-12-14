@@ -14,15 +14,14 @@
     "express-xml-bodyparser": "^0.2.2",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "mongoose": "^4.2.9",
+    "dateformat": "^1.0.12",
+    "js2xmlparser": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
-    "dateformat": "^1.0.12",
-    "js2xmlparser": "^1.0.0",
     "mocha": "^2.3.4",
-    "mongoose": "^4.2.9",
-    "q": "^1.4.1",
     "supertest": "^1.1.0",
     "supertest-as-promised": "^2.0.2"
   }

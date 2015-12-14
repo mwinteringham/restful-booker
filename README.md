@@ -9,7 +9,7 @@ A simple Node booking form for testing RESTful web services.
 1. Clone the repo
 2. Navigate into the restful-booker root folder
 3. Run ```npm install```
-4. Run ```node app.js```
+4. Run ```npm start```
 
 # API
 * [GET    /ping](https://github.com/mwinteringham/restful-booker#get-ping)
