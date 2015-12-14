@@ -307,11 +307,25 @@ describe('restful-booker POST /auth', function(){
 
 describe('restful-booker - PUT /booking', function () {
 
-  it('responds with a 403 when not authorised', function testBadLoginForDelete(done){
+  it('responds with a 403 when no token is sent', function testNoLoginForPut(done){
     request(server)
       .put('/booking/1')
       .expect(403, done);
-  })
+  });
+
+  it('responds with a 403 when not authorised', function testBadLoginForPut(done){
+      request(server)
+        .post('/auth')
+        .send({'username': 'nmida', 'password': '321drowssap'})
+        .expect(200)
+        .then(function(res){
+          request(server)
+            .put('/booking/1')
+            .set('Cookie', 'token=' + res.body.token)
+            .send(payload2)
+            .expect(403, done)
+        })
+  });
 
   it('responds with a 200 and an updated payload', function testUpdatingABooking(done){
     request(server)
@@ -379,10 +393,23 @@ describe('restful-booker - PUT /booking', function () {
 
 describe('restful-booker DELETE /booking', function(){
 
-  it('responds with a 403 when not authorised', function testBadLoginForDelete(done){
+  it('responds with a 403 when not authorised', function testNoLoginForDelete(done){
     request(server)
       .delete('/booking/1')
       .expect(403, done);
+  });
+
+  it('responds with a 403 when not authorised', function testBadLoginForDelete(done){
+      request(server)
+        .post('/auth')
+        .send({'username': 'nmida', 'password': '321drowssap'})
+        .expect(200)
+        .then(function(res){
+          request(server)
+            .delete('/booking/1')
+            .set('Cookie', 'token=' + res.body.token)
+            .expect(403, done)
+        })
   })
 
   it('responds with a 201 when deleting an existing booking', function testDeletingAValidBooking(done){
