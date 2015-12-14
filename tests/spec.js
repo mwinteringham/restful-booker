@@ -279,73 +279,6 @@ describe('restful-booker - POST /booking', function () {
   });
 });
 
-describe('restful-booker - PUT /booking', function () {
-
-  it('responds with a 200 and an updated payload', function testUpdatingABooking(done){
-    request(server)
-      .post('/booking')
-      .send(payload)
-      .then(function(){
-        request(server)
-          .put('/booking/1')
-          .send(payload2)
-          .expect(200)
-          .expect(payload2, done);
-      })
-  });
-
-  it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
-    var xmlPayload = js2xmlparser('booking', payload2)
-
-    request(server)
-      .post('/booking')
-      .send(payload)
-      .then(function(){
-        request(server)
-          .put('/booking/1')
-          .set('Content-type', 'text/xml')
-          .send(xmlPayload)
-          .expect(200)
-          .expect(payload2, done);
-      })
-  });
-
-  it('responds with an XML payload when PUT /booking with accept application/xml', function testPutWithXMLAccept(done){
-    xmlPayload = js2xmlparser('booking', payload2)
-
-    request(server)
-      .post('/booking')
-      .send(payload)
-      .then(function(){
-        request(server)
-          .put('/booking/1')
-          .set('Accept', 'application/xml')
-          .send(payload2)
-          .expect(200)
-          .expect(xmlPayload, done);
-      })
-  });
-});
-
-describe('restful-booker DELETE /booking', function(){
-
-  it('responds with a 201 when deleting an existing booking', function testDeletingAValidBooking(done){
-    request(server)
-      .post('/booking')
-      .send(payload)
-      .then(function(){
-        return request(server)
-          .delete('/booking/1')
-          .expect(201)
-      }).then(function(){
-        request(server)
-          .get('/booking/1')
-          .expect(404, done)
-      });
-  });
-
-});
-
 describe('restful-booker POST /auth', function(){
 
   it('responds with a 200 and a token to use when POSTing a valid credential', function testAuthReturnsToken(done){
@@ -370,4 +303,107 @@ describe('restful-booker POST /auth', function(){
       .end(done)
   })
 
-})
+});
+
+describe('restful-booker - PUT /booking', function () {
+
+  it('responds with a 403 when not authorised', function testBadLoginForDelete(done){
+    request(server)
+      .put('/booking/1')
+      .expect(403, done);
+  })
+
+  it('responds with a 200 and an updated payload', function testUpdatingABooking(done){
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        return request(server)
+          .post('/auth')
+          .send({'username': 'admin', 'password': 'password123'})
+      })
+      .then(function(res){
+        request(server)
+          .put('/booking/1')
+          .set('Cookie', 'token=' + res.body.token)
+          .send(payload2)
+          .expect(200)
+          .expect(payload2, done);
+      })
+  });
+
+  it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
+    var xmlPayload = js2xmlparser('booking', payload2)
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        return request(server)
+          .post('/auth')
+          .send({'username': 'admin', 'password': 'password123'})
+      })
+      .then(function(res){
+        request(server)
+          .put('/booking/1')
+          .set('Cookie', 'token=' + res.body.token)
+          .set('Content-type', 'text/xml')
+          .send(xmlPayload)
+          .expect(200)
+          .expect(payload2, done);
+      })
+  });
+
+  it('responds with an XML payload when PUT /booking with accept application/xml', function testPutWithXMLAccept(done){
+    xmlPayload = js2xmlparser('booking', payload2)
+
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        return request(server)
+          .post('/auth')
+          .send({'username': 'admin', 'password': 'password123'})
+      })
+      .then(function(res){
+        request(server)
+          .put('/booking/1')
+          .set('Cookie', 'token=' + res.body.token)
+          .set('Accept', 'application/xml')
+          .send(payload2)
+          .expect(200)
+          .expect(xmlPayload, done);
+      })
+  });
+});
+
+describe('restful-booker DELETE /booking', function(){
+
+  it('responds with a 403 when not authorised', function testBadLoginForDelete(done){
+    request(server)
+      .delete('/booking/1')
+      .expect(403, done);
+  })
+
+  it('responds with a 201 when deleting an existing booking', function testDeletingAValidBooking(done){
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(){
+        return request(server)
+          .post('/auth')
+          .send({'username': 'admin', 'password': 'password123'})
+      })
+      .then(function(res){
+        return request(server)
+          .delete('/booking/1')
+          .set('Cookie', 'token=' + res.body.token)
+          .expect(201)
+      }).then(function(){
+        request(server)
+          .get('/booking/1')
+          .expect(404, done)
+      });
+  });
+
+});
