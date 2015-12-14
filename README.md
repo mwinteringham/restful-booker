@@ -122,32 +122,37 @@ POST /booking
 ##### Accept: application/json
 ```
 {
-    "_id": "1",
-    "firstname": "Sally",
-    "lastname": "Brown",
-    "totalprice": 111,
-    "depositpaid": true,
-    "additionalneeds": "Breakfast",
-    "bookingdates": {
-        "checkin": "2013-02-23",
-        "checkout": "2014-10-23"
+    "bookingid": "1".
+    "booking": {
+        "firstname": "Sally",
+        "lastname": "Brown",
+        "totalprice": 111,
+        "depositpaid": true,
+        "additionalneeds": "Breakfast",
+        "bookingdates": {
+            "checkin": "2013-02-23",
+            "checkout": "2014-10-23"
+        }
     }
 }
 ```
 ##### Accept: application/xml
 ```
-<booking>
-    <id>1</id>
-    <firstname>Sally</firstname>
-    <lastname>Brown</lastname>
-    <totalprice>111</totalprice>
-    <depositpaid>true</depositpaid>
-    <additionalneeds>Breakfast</additionalneeds>
-    <bookingdates>
-    	<checkin>2013-02-23</checkin>
-    	<checkout>2014-10-23</checkout>
-    </bookingdates>
-</booking>
+<?xml version="1.0" encoding="UTF-8"?>
+<created-booking>
+    <bookingid>1</bookingid>
+    <booking>
+        <firstname>Sally</firstname>
+        <lastname>Brown</lastname>
+        <totalprice>111</totalprice>
+        <depositpaid>true</depositpaid>
+        <additionalneeds>Breakfast</additionalneeds>
+        <bookingdates>
+            <checkin>2013-02-23</checkin>
+            <checkout>2014-10-23</checkout>
+        </bookingdates>
+    </booking>
+</created-booking>
 ```
 
 ## POST /auth
@@ -210,22 +215,21 @@ PUT /booking/1
 ##### Accept: application/json
 ```
 {
-    "bookingid": "1".
-    "booking": {
-        "firstname": "Sally",
-        "lastname": "Brown",
-        "totalprice": 111,
-        "depositpaid": true,
-        "additionalneeds": "Breakfast",
-        "bookingdates": {
-            "checkin": "2013-02-23",
-            "checkout": "2014-10-23"
-        }
+    "_id": "1",
+    "firstname": "Sally",
+    "lastname": "Brown",
+    "totalprice": 111,
+    "depositpaid": true,
+    "additionalneeds": "Breakfast",
+    "bookingdates": {
+        "checkin": "2013-02-23",
+        "checkout": "2014-10-23"
     }
 }
 ```
 ##### Accept: application/xml
 ```
+<?xml version="1.0" encoding="UTF-8"?>
 <booking>
     <id>1</id>
     <firstname>Sally</firstname>
@@ -234,8 +238,8 @@ PUT /booking/1
     <depositpaid>true</depositpaid>
     <additionalneeds>Breakfast</additionalneeds>
     <bookingdates>
-    	<checkin>2013-02-23</checkin>
-    	<checkout>2014-10-23</checkout>
+        <checkin>2013-02-23</checkin>
+        <checkout>2014-10-23</checkout>
     </bookingdates>
 </booking>
 ```
