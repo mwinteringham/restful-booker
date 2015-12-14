@@ -3,12 +3,12 @@ var router  = express.Router(),
     parse   = require('../helpers/parser'),
     crypto = require('crypto'),
     Booking = require('../models/booking'),
-    creator = require('../helpers/bookingcreator');
+    creator = require('../helpers/bookingcreator'),
     globalLogins = {};
 
 Booking.deleteAll(function(err){
   if(err) return console.error(err);
-  
+
   for(i = 0; i < 10; i++){
     var newBooking = creator.createBooking()
 
