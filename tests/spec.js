@@ -3,8 +3,7 @@ var request      = require('supertest-as-promised'),
     should       = require('chai').should(),
     mongoose     = require('mongoose'),
     js2xmlparser = require("js2xmlparser"),
-    assert       = require('assert'),
-    chai         = require('chai').should();
+    assert       = require('assert');
 
 mongoose.createConnection('mongodb://localhost/restful-booker2');
 
@@ -75,7 +74,18 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking')
           .expect(200)
-          .expect([{"bookingid": 1},{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(1);
+            res.body[0].should.have.property('link');
+            res.body[0].link.should.have.property('rel').and.equal('self');
+            res.body[0].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+
+            res.body[1].should.have.property('bookingid').and.equal(2);
+            res.body[1].should.have.property('link');
+            res.body[1].link.should.have.property('rel').and.equal('self');
+            res.body[1].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/2/);
+          })
+          .end(done);
       });
   });
 
@@ -91,7 +101,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?firstname=Geoff')
           .expect(200)
-          .expect([{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(2);
+          })
+          .end(done)
       })
   });
 
@@ -107,7 +120,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?lastname=White')
           .expect(200)
-          .expect([{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(2);
+          })
+          .end(done)
       })
   });
 
@@ -123,7 +139,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?checkin=2013-02-01')
           .expect(200)
-          .expect([{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(2);
+          })
+          .end(done)
       })
   });
 
@@ -139,7 +158,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?checkout=2013-02-05')
           .expect(200)
-          .expect([{"bookingid": 1}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(1);
+          })
+          .end(done)
       })
   });
 
@@ -159,7 +181,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?checkin=2013-02-01&checkout=2013-02-06')
           .expect(200)
-          .expect([{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(2);
+          })
+          .end(done)
       });
   });
 
@@ -179,7 +204,10 @@ describe('restful-booker - GET /booking', function () {
         request(server)
           .get('/booking?firstname=Geoff&lastname=White&checkin=2013-02-01&checkout=2013-02-06')
           .expect(200)
-          .expect([{"bookingid": 2}], done)
+          .expect(function(res){
+            res.body[0].should.have.property('bookingid').and.equal(2);
+          })
+          .end(done)
       })
   });
 
