@@ -42,21 +42,7 @@ router.get('/booking', function(req, res, next) {
   }
 
   Booking.getIDs(query, function(err, record){
-    var payload = [];
-
-    record.forEach(function(b){
-      var tmpBooking = {
-        bookingid: b.bookingid,
-        link: {
-          'rel': 'self',
-          'href': req.protocol + '://' + req.get('host') + '/booking/' + b.bookingid
-        }
-      }
-
-      payload.push(tmpBooking);
-    });
-
-    res.send(payload);
+    res.send(parse.bookingids(req, record));
   })
 });
 

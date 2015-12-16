@@ -1,6 +1,24 @@
 var js2xmlparser = require("js2xmlparser"),
     dateFormat = require('dateformat');
 
+exports.bookingids = function(req, rawBooking){
+  var payload = [];
+
+  rawBooking.forEach(function(b){
+    var tmpBooking = {
+      bookingid: b.bookingid,
+      link: {
+        'rel': 'self',
+        'href': req.protocol + '://' + req.get('host') + '/booking/' + b.bookingid
+      }
+    }
+
+      payload.push(tmpBooking);
+  });
+
+  return payload;
+}
+
 exports.booking = function(accept, rawBooking){
 	var booking = {
     'firstname' : rawBooking.firstname,
