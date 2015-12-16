@@ -65,7 +65,7 @@ router.post('/booking', function(req, res, next) {
     if(err)
       res.sendStatus(500);
     else {
-      res.send(parse.bookingWithId(req.headers.accept, booking));
+      res.send(parse.bookingWithId(req, booking));
     }
   })
 });

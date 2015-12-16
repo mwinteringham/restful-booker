@@ -3,7 +3,8 @@ var request      = require('supertest-as-promised'),
     should       = require('chai').should(),
     mongoose     = require('mongoose'),
     js2xmlparser = require("js2xmlparser"),
-    assert       = require('assert');
+    assert       = require('assert'),
+    xml2js       = require('xml2js').parseString;
 
 mongoose.createConnection('mongodb://localhost/restful-booker2');
 
@@ -256,7 +257,12 @@ describe('restful-booker - POST /booking', function () {
       .post('/booking')
       .send(payload)
       .expect(200)
-      .expect({"bookingid": 1, "booking" : payload}, done);
+      .expect(function(res){
+        res.body.booking.should.deep.equal(payload);
+        res.body.link.should.have.property('rel').and.equal('self');
+        res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+      })
+      .end(done)
   });
 
   it('responds with the created booking and assigned booking id when sent an XML payload', function testCreateBooking(done){
@@ -267,7 +273,12 @@ describe('restful-booker - POST /booking', function () {
       .set('Content-type', 'text/xml')
       .send(xmlPayload)
       .expect(200)
-      .expect({"bookingid": 1, "booking" : payload}, done);
+      .expect(function(res){
+        res.body.booking.should.deep.equal(payload);
+        res.body.link.should.have.property('rel').and.equal('self');
+        res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+      })
+      .end(done)
   });
 
   it('responds with a 500 error when a bad payload is sent', function testCreateBadBooking(done){
@@ -277,16 +288,6 @@ describe('restful-booker - POST /booking', function () {
       .post('/booking')
       .send(badpayload)
       .expect(500, done);
-  });
-
-  it('responds with a 200 when a payload with too many params are sent', function testCreateExtraPayload(done){
-    var extraPayload = payload
-    extraPayload.extra = 'bad'
-
-    request(server)
-      .post('/booking')
-      .send(payload)
-      .expect(200, done);
   });
 
   it('responds with the correct assigned booking id when multiple payloads are sent', function testBookingId(done){
@@ -299,21 +300,52 @@ describe('restful-booker - POST /booking', function () {
           .send(payload2)
           .expect(200)
           .expect(function(res) {
-            assert.equal(res.body.bookingid, 2)
+            res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/2/);
           })
           .end(done)
       })
   });
 
-  it('responds with an XML payload when POST /booking/ with accept application/xml', function testGetWithXMLAccept(done){
+  it('responds with an XML payload when POST /booking with accept application/xml', function testGetWithXMLAccept(done){
     var xmlPayload = js2xmlparser('created-booking', { "bookingid": 1, "booking": payload2 })
+
+    parseBooleans = function(str) {
+      if (/^(?:true|false)$/i.test(str)) {
+        str = str.toLowerCase() === 'true';
+      }
+      return str;
+    };
+
+    parseNumbers = function(str) {
+      if (!isNaN(str)) {
+        str = str % 1 === 0 ? parseInt(str, 10) : parseFloat(str);
+      }
+      return str;
+    };
 
     request(server)
       .post('/booking')
       .set('Accept', 'application/xml')
       .send(payload2)
       .expect(200)
-      .expect(xmlPayload, done);
+      .expect(function(res){
+        xml2js(res.text, {explicitArray: false, valueProcessors: [parseNumbers, parseBooleans]}, function (err, result) {
+          result['created-booking'].booking.should.deep.equal(payload2);
+          result['created-booking'].link.should.have.property('rel').and.equal('self');
+          result['created-booking'].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+        });
+      })
+      .end(done);
+  });
+
+  it('responds with a 200 when a payload with too many params are sent', function testCreateExtraPayload(done){
+    var extraPayload = payload
+    extraPayload.extra = 'bad'
+
+    request(server)
+      .post('/booking')
+      .send(extraPayload)
+      .expect(200, done);
   });
 });
 

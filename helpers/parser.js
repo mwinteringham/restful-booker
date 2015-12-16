@@ -42,7 +42,7 @@ exports.booking = function(accept, rawBooking){
   }
 }
 
-exports.bookingWithId = function(accept, rawBooking){
+exports.bookingWithId = function(req, rawBooking){
   var booking = {
     'firstname' : rawBooking.firstname,
     'lastname' : rawBooking.lastname,
@@ -59,11 +59,14 @@ exports.bookingWithId = function(accept, rawBooking){
   }
 
   var payload = {
-    "bookingid" : rawBooking.bookingid,
-    "booking" : booking
+    "booking" : booking,
+    "link": {
+      'rel': 'self',
+      'href': req.protocol + '://' + req.get('host') + '/booking/' + rawBooking.bookingid
+    }
   }
 
-  if(accept == 'application/xml'){
+  if(req.headers.accept == 'application/xml'){
     return js2xmlparser('created-booking', payload);
   } else {
     return payload;
