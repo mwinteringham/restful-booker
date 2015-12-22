@@ -9,13 +9,20 @@ var router  = express.Router(),
 Booking.deleteAll(function(err){
   if(err) return console.error(err);
 
-  for(i = 0; i < 10; i++){
+  var count = 1;
+
+  (function createBooking(){
     var newBooking = creator.createBooking()
 
     Booking.create(newBooking, function(err, result){
       if(err) return console.error(err);
+
+      if(count < 10){
+        count++;
+        createBooking();
+      }
     });
-  }
+  })()
 })
 
 router.get('/ping', function(req, res, next) {
