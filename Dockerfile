@@ -10,8 +10,9 @@ RUN apt-get update && apt-get install -y mongodb-org
 RUN mkdir -p /data/db
 
 # Install node
-RUN apt-get install -y nodejs-legacy
-RUN apt-get install -y npm
+RUN apt-get -y install curl
+RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
 
 # Copy restful-booker across
 RUN mkdir /restful-booker
