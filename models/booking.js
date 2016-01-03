@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     dateFormat = require('dateformat'),
     counter = require('./counters');
 
-mongoose.connect('mongodb://localhost/restful-booker2');
+mongoose.connect('mongodb://localhost/restful-booker');
 
 var bookingSchema = mongoose.Schema({
     bookingid: {type: Number},

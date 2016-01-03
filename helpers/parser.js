@@ -35,10 +35,15 @@ exports.booking = function(accept, rawBooking){
     booking.additionalneeds = rawBooking.additionalneeds;
   }
 
-  if(accept == 'application/xml'){
-    return js2xmlparser('booking', booking);
-  } else {
-    return booking;
+  switch(accept){
+    case 'application/xml':
+      return js2xmlparser('booking', booking);
+      break;
+    case 'application/json':
+      return booking;
+      break;
+    default:
+      return null;
   }
 }
 
@@ -66,9 +71,14 @@ exports.bookingWithId = function(req, rawBooking){
     }
   }
 
-  if(req.headers.accept == 'application/xml'){
-    return js2xmlparser('created-booking', payload);
-  } else {
-    return payload;
+  switch(req.headers.accept){
+    case 'application/xml':
+      return js2xmlparser('created-booking', payload);
+      break;
+    case 'application/json':
+      return payload;
+      break;
+    default:
+      return null;
   }
 }

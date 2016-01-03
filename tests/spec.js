@@ -6,7 +6,7 @@ var request      = require('supertest-as-promised'),
     assert       = require('assert'),
     xml2js       = require('xml2js').parseString;
 
-mongoose.createConnection('mongodb://localhost/restful-booker2');
+mongoose.createConnection('mongodb://localhost/restful-booker');
 
 var generatePayload = function(firstname, lastname, totalprice, depositpaid, additionalneeds, checkin, checkout){
   var payload = {
@@ -34,6 +34,11 @@ var payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-0
 var server = require('../app')
 
 describe('restful-booker', function () {
+
+  beforeEach(function(){
+    mongoose.connection.db.dropDatabase();
+  })
+
   it('responds to /ping', function testPing(done){
     request(server)
       .get('/ping')
@@ -46,15 +51,6 @@ describe('restful-booker', function () {
       .expect(404, done);
   });
 
-  it('should startup with 10 records', function testRandomGenerator(done){
-    request(server)
-      .get('/booking')
-      .send(payload)
-      .expect(function(res){
-        assert.equal(res.body.length, 10)
-      })
-      .end(done);
-  })
 });
 
 describe('restful-booker - GET /booking', function () {
@@ -76,15 +72,15 @@ describe('restful-booker - GET /booking', function () {
           .get('/booking')
           .expect(200)
           .expect(function(res){
-            res.body[0].should.have.property('bookingid').and.equal(1);
+            res.body[0].should.have.property('bookingid').and.match(/[0-9]/);
             res.body[0].should.have.property('link');
             res.body[0].link.should.have.property('rel').and.equal('self');
-            res.body[0].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+            res.body[0].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/[0-9]/);
 
-            res.body[1].should.have.property('bookingid').and.equal(2);
+            res.body[1].should.have.property('bookingid').and.match(/[0-9]/);
             res.body[1].should.have.property('link');
             res.body[1].link.should.have.property('rel').and.equal('self');
-            res.body[1].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/2/);
+            res.body[1].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/[0-9]/);
           })
           .end(done);
       });
@@ -225,6 +221,7 @@ describe('restful-booker - GET /booking', function () {
       .then(function(){
         request(server)
           .get('/booking/1')
+          .set('Accept', 'application/json')
           .expect(200)
           .expect(payload, done)
       });
@@ -255,6 +252,7 @@ describe('restful-booker - POST /booking', function () {
   it('responds with the created booking and assigned booking id', function testCreateBooking(done){
     request(server)
       .post('/booking')
+      .set('Accept', 'application/json')
       .send(payload)
       .expect(200)
       .expect(function(res){
@@ -271,6 +269,7 @@ describe('restful-booker - POST /booking', function () {
     request(server)
       .post('/booking')
       .set('Content-type', 'text/xml')
+      .set('Accept', 'application/json')
       .send(xmlPayload)
       .expect(200)
       .expect(function(res){
@@ -298,6 +297,7 @@ describe('restful-booker - POST /booking', function () {
         request(server)
           .post('/booking')
           .send(payload2)
+          .set('Accept', 'application/json')
           .expect(200)
           .expect(function(res) {
             res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/2/);
@@ -344,9 +344,18 @@ describe('restful-booker - POST /booking', function () {
 
     request(server)
       .post('/booking')
+      .set('Accept', 'application/json')
       .send(extraPayload)
       .expect(200, done);
   });
+
+  it('responds with a 418 when using a bad accept header', function testTeapot(done){
+    request(server)
+      .post('/booking')
+      .set('Accept', 'application/ogg')
+      .send(payload)
+      .expect(418, done)
+  })
 });
 
 describe('restful-booker POST /auth', function(){
@@ -391,6 +400,7 @@ describe('restful-booker - PUT /booking', function () {
         .then(function(res){
           request(server)
             .put('/booking/1')
+            .set('Accept', 'application/json')
             .set('Cookie', 'token=' + res.body.token)
             .send(payload2)
             .expect(403, done)
@@ -409,6 +419,7 @@ describe('restful-booker - PUT /booking', function () {
       .then(function(res){
         request(server)
           .put('/booking/1')
+          .set('Accept', 'application/json')
           .set('Cookie', 'token=' + res.body.token)
           .send(payload2)
           .expect(200)
@@ -432,6 +443,7 @@ describe('restful-booker - PUT /booking', function () {
           .put('/booking/1')
           .set('Cookie', 'token=' + res.body.token)
           .set('Content-type', 'text/xml')
+          .set('Accept', 'application/json')
           .send(xmlPayload)
           .expect(200)
           .expect(payload2, done);
