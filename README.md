@@ -43,7 +43,36 @@ GET /booking?checkin=2014-03-13&checkout=2014-05-21
 
 #### Response
 ```
-[{"id":"1"},{"id":"2"},{"id":"3"},{"id":"4"},{"id":"5"},{"id":"6"},{"id":"7"},{"id":"8"},{"id":"9"}]
+[
+  {
+    "bookingid": 1,
+    "link": {
+      "rel": "self",
+      "href": "http://localhost:3001/booking/1"
+    }
+  },
+  {
+    "bookingid": 2,
+    "link": {
+      "rel": "self",
+      "href": "http://localhost:3001/booking/2"
+    }
+  },
+  {
+    "bookingid": 3,
+    "link": {
+      "rel": "self",
+      "href": "http://localhost:3001/booking/3"
+    }
+  },
+  {
+    "bookingid": 4,
+    "link": {
+      "rel": "self",
+      "href": "http://localhost:3001/booking/4"
+    }
+  }
+]
 ```
 
 ## GET /booking/{id}
@@ -122,7 +151,6 @@ POST /booking
 ##### Accept: application/json
 ```
 {
-    "bookingid": "1".
     "booking": {
         "firstname": "Sally",
         "lastname": "Brown",
@@ -133,6 +161,10 @@ POST /booking
             "checkin": "2013-02-23",
             "checkout": "2014-10-23"
         }
+    },
+    "link": {
+        "rel": "self",
+        "href": "http://localhost:3001/booking/1"
     }
 }
 ```
@@ -140,7 +172,6 @@ POST /booking
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <created-booking>
-    <bookingid>1</bookingid>
     <booking>
         <firstname>Sally</firstname>
         <lastname>Brown</lastname>
@@ -152,6 +183,10 @@ POST /booking
             <checkout>2014-10-23</checkout>
         </bookingdates>
     </booking>
+    <link>
+        <rel>self</rel>
+        <href>http://localhost:3001/booking/1</href>
+    </link>
 </created-booking>
 ```
 
