@@ -108,7 +108,7 @@ router.put('/booking/:id', function(req, res, next) {
             res.send(booking);
           }
         } else {
-          res.sendStatus(404)
+          res.sendStatus(405);
         }
       })
     })
@@ -125,7 +125,7 @@ router.delete('/booking/:id', function(req, res, next) {
             res.sendStatus(201);
         });
       } else {
-        res.sendStatus(404);
+        res.sendStatus(405);
       }
     });
   } else {

@@ -21,4 +21,4 @@ COPY ./ /restful-booker/
 
 RUN cd /restful-booker && npm install
 
-CMD mongod & cd /restful-booker && npm start
+CMD mongod & sleep 5 && cd /restful-booker && npm start

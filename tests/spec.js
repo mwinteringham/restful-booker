@@ -427,6 +427,20 @@ describe('restful-booker - PUT /booking', function () {
       })
   });
 
+  it('responsds with a 405 when attempting to update a booking that does not exist', function testUpdatingNonExistantBooking(done){
+      request(server)
+      .post('/auth')
+      .send({'username': 'admin', 'password': 'password123'})
+      .then(function(res){
+        request(server)
+          .put('/booking/100000')
+          .set('Accept', 'application/json')
+          .set('Cookie', 'token=' + res.body.token)
+          .send(payload2)
+          .expect(405, done);
+      })
+  })
+
   it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
     var xmlPayload = js2xmlparser('booking', payload2)
 
@@ -514,5 +528,17 @@ describe('restful-booker DELETE /booking', function(){
           .expect(404, done)
       });
   });
+
+  it('responds with a 405 when deleting a non existing booking', function testDeletingNonExistantBooking(done){
+    request(server)
+      .post('/auth')
+      .send({'username': 'admin', 'password': 'password123'})
+      .then(function(res){
+        request(server)
+          .delete('/booking/1')
+          .set('Cookie', 'token=' + res.body.token)
+          .expect(405, done)
+      })
+  })
 
 });

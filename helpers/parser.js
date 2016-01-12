@@ -42,6 +42,9 @@ exports.booking = function(accept, rawBooking){
     case 'application/json':
       return booking;
       break;
+    case '*/*':
+      return payload;
+      break;
     default:
       return null;
   }
@@ -76,6 +79,9 @@ exports.bookingWithId = function(req, rawBooking){
       return js2xmlparser('created-booking', payload);
       break;
     case 'application/json':
+      return payload;
+      break;
+    case '*/*':
       return payload;
       break;
     default:
