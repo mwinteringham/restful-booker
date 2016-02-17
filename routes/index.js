@@ -37,7 +37,7 @@ router.get('/booking', function(req, res, next) {
   }
 
   if(typeof(req.query.lastname) != 'undefined'){
-    query.lastname = req.query.lastname 
+    query.lastname = req.query.lastname
   }
 
   if(typeof(req.query.checkin) != 'undefined'){

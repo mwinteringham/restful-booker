@@ -7,13 +7,9 @@ exports.bookingids = function(req, rawBooking){
   rawBooking.forEach(function(b){
     var tmpBooking = {
       bookingid: b.bookingid,
-      link: {
-        'rel': 'self',
-        'href': req.protocol + '://' + req.get('host') + '/booking/' + b.bookingid
-      }
     }
 
-      payload.push(tmpBooking);
+    payload.push(tmpBooking);
   });
 
   return payload;
@@ -43,7 +39,7 @@ exports.booking = function(accept, rawBooking){
       return booking;
       break;
     case '*/*':
-      return payload;
+      return booking;
       break;
     default:
       return null;
@@ -67,11 +63,8 @@ exports.bookingWithId = function(req, rawBooking){
   }
 
   var payload = {
-    "booking" : booking,
-    "link": {
-      'rel': 'self',
-      'href': req.protocol + '://' + req.get('host') + '/booking/' + rawBooking.bookingid
-    }
+    "bookingid" : rawBooking.bookingid,
+    "booking" : booking
   }
 
   switch(req.headers.accept){

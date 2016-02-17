@@ -73,14 +73,7 @@ describe('restful-booker - GET /booking', function () {
           .expect(200)
           .expect(function(res){
             res.body[0].should.have.property('bookingid').and.match(/[0-9]/);
-            res.body[0].should.have.property('link');
-            res.body[0].link.should.have.property('rel').and.equal('self');
-            res.body[0].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/[0-9]/);
-
             res.body[1].should.have.property('bookingid').and.match(/[0-9]/);
-            res.body[1].should.have.property('link');
-            res.body[1].link.should.have.property('rel').and.equal('self');
-            res.body[1].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/[0-9]/);
           })
           .end(done);
       });
@@ -256,9 +249,8 @@ describe('restful-booker - POST /booking', function () {
       .send(payload)
       .expect(200)
       .expect(function(res){
+        res.body.bookingid.should.equal(1);
         res.body.booking.should.deep.equal(payload);
-        res.body.link.should.have.property('rel').and.equal('self');
-        res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
       })
       .end(done)
   });
@@ -273,9 +265,8 @@ describe('restful-booker - POST /booking', function () {
       .send(xmlPayload)
       .expect(200)
       .expect(function(res){
+        res.body.bookingid.should.equal(1);
         res.body.booking.should.deep.equal(payload);
-        res.body.link.should.have.property('rel').and.equal('self');
-        res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
       })
       .end(done)
   });
@@ -300,7 +291,7 @@ describe('restful-booker - POST /booking', function () {
           .set('Accept', 'application/json')
           .expect(200)
           .expect(function(res) {
-            res.body.link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/2/);
+            res.body.bookingid.should.equal(2);
           })
           .end(done)
       })
@@ -331,8 +322,7 @@ describe('restful-booker - POST /booking', function () {
       .expect(function(res){
         xml2js(res.text, {explicitArray: false, valueProcessors: [parseNumbers, parseBooleans]}, function (err, result) {
           result['created-booking'].booking.should.deep.equal(payload2);
-          result['created-booking'].link.should.have.property('rel').and.equal('self');
-          result['created-booking'].link.should.have.property('href').and.match(/http:\/\/[0-9.:a-zA-Z]*\/booking\/1/);
+          result['created-booking'].bookingid.should.equal(1);
         });
       })
       .end(done);
