@@ -3,27 +3,30 @@ var router  = express.Router(),
     parse   = require('../helpers/parser'),
     crypto = require('crypto'),
     Booking = require('../models/booking'),
+    Counter = require('../models/counters'),
     creator = require('../helpers/bookingcreator'),
     globalLogins = {};
 
 Booking.deleteAll(function(err){
   if(err) return console.error(err);
 
-  var count = 1;
+  Counter.resetCounter(function() {
+    var count = 1;
 
-  (function createBooking(){
-    var newBooking = creator.createBooking()
+    (function createBooking(){
+      var newBooking = creator.createBooking()
 
-    Booking.create(newBooking, function(err, result){
-      if(err) return console.error(err);
+      Booking.create(newBooking, function(err, result){
+        if(err) return console.error(err);
 
-      if(count < 10){
-        count++;
-        createBooking();
-      }
-    });
-  })()
-})
+        if(count < 10){
+          count++;
+          createBooking();
+        }
+      });
+    })()
+  });
+});
 
 router.get('/ping', function(req, res, next) {
   res.sendStatus(201);

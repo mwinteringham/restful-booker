@@ -18,6 +18,12 @@ exports.bumpId = function(doc, callback){
           new Counter({type: 'bookingid', seq: 1}).save();
 
           callback(1);
-        }          
+        }
     });
+}
+
+exports.resetCounter = function(callback){
+  Counter.findOneAndUpdate({type: 'bookingid'}, { $set: { seq: 0 } }, function(){
+    callback();
+  })
 }
