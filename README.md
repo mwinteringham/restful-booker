@@ -45,32 +45,16 @@ GET /booking?checkin=2014-03-13&checkout=2014-05-21
 ```
 [
   {
-    "bookingid": 1,
-    "link": {
-      "rel": "self",
-      "href": "http://localhost:3001/booking/1"
-    }
+    "bookingid": 1
   },
   {
-    "bookingid": 2,
-    "link": {
-      "rel": "self",
-      "href": "http://localhost:3001/booking/2"
-    }
+    "bookingid": 2
   },
   {
-    "bookingid": 3,
-    "link": {
-      "rel": "self",
-      "href": "http://localhost:3001/booking/3"
-    }
+    "bookingid": 3
   },
   {
-    "bookingid": 4,
-    "link": {
-      "rel": "self",
-      "href": "http://localhost:3001/booking/4"
-    }
+    "bookingid": 4
   }
 ]
 ```
