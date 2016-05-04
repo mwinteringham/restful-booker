@@ -417,6 +417,21 @@ describe('restful-booker - PUT /booking', function () {
       })
   });
 
+  it('responds with a 200 and an updated payload using auth', function testUpdatingABooking(done){
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(res){
+        request(server)
+          .put('/booking/1')
+          .set('Accept', 'application/json')
+          .set('Authorization', 'Basic YWRtaW46cGFzc3dvcmQxMjM=')
+          .send(payload2)
+          .expect(200)
+          .expect(payload2, done);
+      })
+  });
+
   it('responsds with a 405 when attempting to update a booking that does not exist', function testUpdatingNonExistantBooking(done){
       request(server)
       .post('/auth')
@@ -515,6 +530,22 @@ describe('restful-booker DELETE /booking', function(){
       }).then(function(){
         request(server)
           .get('/booking/1')
+          .expect(404, done)
+      });
+  });
+
+  it('responds with a 201 when deleting an existing booking with a basic auth header', function testDeletingAValidBookingWithAuth(done){
+    request(server)
+      .post('/booking')
+      .send(payload)
+      .then(function(res){
+        return request(server)
+          .delete('/booking/2')
+          .set('Authorization', 'Basic YWRtaW46cGFzc3dvcmQxMjM=')
+          .expect(201)
+      }).then(function(){
+        request(server)
+          .get('/booking/2')
           .expect(404, done)
       });
   });
