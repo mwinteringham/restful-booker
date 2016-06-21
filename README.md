@@ -145,10 +145,6 @@ POST /booking
             "checkin": "2013-02-23",
             "checkout": "2014-10-23"
         }
-    },
-    "link": {
-        "rel": "self",
-        "href": "http://localhost:3001/booking/1"
     }
 }
 ```
@@ -167,10 +163,6 @@ POST /booking
             <checkout>2014-10-23</checkout>
         </bookingdates>
     </booking>
-    <link>
-        <rel>self</rel>
-        <href>http://localhost:3001/booking/1</href>
-    </link>
 </created-booking>
 ```
 
