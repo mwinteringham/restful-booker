@@ -6,10 +6,11 @@ A simple Node booking form for testing RESTful web services.
 - Mongo 2.6.5
 
 # Installation
-1. Clone the repo
-2. Navigate into the restful-booker root folder
-3. Run ```npm install```
-4. Run ```npm start```
+1. Ensure mongo is up and running by executing ```mongod``` in your terminal
+2. Clone the repo
+3. Navigate into the restful-booker root folder
+4. Run ```npm install```
+5. Run ```npm start```
 
 # API
 * [GET    /ping](https://github.com/mwinteringham/restful-booker#get-ping)
