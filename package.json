@@ -7,22 +7,21 @@
     "test": "mocha -R spec tests/spec.js"
   },
   "dependencies": {
-    "body-parser": "~1.13.2",
-    "cookie-parser": "~1.3.5",
-    "dateformat": "^1.0.12",
-    "debug": "~2.2.0",
-    "express": "~4.13.1",
-    "express-xml-bodyparser": "^0.2.2",
-    "jade": "~1.11.0",
-    "js2xmlparser": "^1.0.0",
+    "body-parser": "^1.17.0",
+    "cookie-parser": "^1.4.3",
+    "dateformat": "^2.0.0",
+    "debug": "^2.6.1",
+    "express": "^4.15.0",
+    "express-xml-bodyparser": "^0.3.0",
+    "pug": "^2.0.0-beta9",
+    "js2xmlparser": "^3.0.0",
     "mongoose": "^4.2.9",
-    "morgan": "~1.6.1"
+    "morgan": "^1.8.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
-    "mocha": "^2.3.4",
-    "supertest": "^1.1.0",
-    "supertest-as-promised": "^2.0.2",
+    "mocha": "^3.2.0",
+    "supertest": "^3.0.0",
     "xml2js": "^0.4.15"
   }
 }
