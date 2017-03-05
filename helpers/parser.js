@@ -33,7 +33,7 @@ exports.booking = function(accept, rawBooking){
 
   switch(accept){
     case 'application/xml':
-      return js2xmlparser('booking', booking);
+      return js2xmlparser.parse('booking', booking);
       break;
     case 'application/json':
       return booking;
@@ -69,7 +69,7 @@ exports.bookingWithId = function(req, rawBooking){
 
   switch(req.headers.accept){
     case 'application/xml':
-      return js2xmlparser('created-booking', payload);
+      return js2xmlparser.parse('created-booking', payload);
       break;
     case 'application/json':
       return payload;

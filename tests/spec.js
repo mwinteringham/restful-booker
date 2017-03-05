@@ -1,4 +1,4 @@
-var request      = require('supertest-as-promised'),
+var request      = require('supertest'),
     expect       = require('chai').expect,
     should       = require('chai').should(),
     mongoose     = require('mongoose'),
@@ -92,7 +92,8 @@ describe('restful-booker - GET /booking', function () {
           .get('/booking?firstname=Geoff')
           .expect(200)
           .expect(function(res){
-            res.body[0].should.have.property('bookingid').and.equal(2);
+            console.log(res.body)
+            res.body[0].should.have.property('bookingid').and.equal(4);
           })
           .end(done)
       })
@@ -221,7 +222,7 @@ describe('restful-booker - GET /booking', function () {
   });
 
   it('responds with an XML payload when GET /booking/{id} with accept application/xml', function testGetWithXMLAccept(done){
-    xmlPayload = js2xmlparser('booking', payload)
+    xmlPayload = js2xmlparser.parse('booking', payload)
 
     request(server)
       .post('/booking')
@@ -256,7 +257,7 @@ describe('restful-booker - POST /booking', function () {
   });
 
   it('responds with the created booking and assigned booking id when sent an XML payload', function testCreateBooking(done){
-    var xmlPayload = js2xmlparser('booking', payload)
+    var xmlPayload = js2xmlparser.parse('booking', payload)
 
     request(server)
       .post('/booking')
@@ -298,7 +299,7 @@ describe('restful-booker - POST /booking', function () {
   });
 
   it('responds with an XML payload when POST /booking with accept application/xml', function testGetWithXMLAccept(done){
-    var xmlPayload = js2xmlparser('created-booking', { "bookingid": 1, "booking": payload2 })
+    var xmlPayload = js2xmlparser.parse('created-booking', { "bookingid": 1, "booking": payload2 })
 
     parseBooleans = function(str) {
       if (/^(?:true|false)$/i.test(str)) {
@@ -447,7 +448,7 @@ describe('restful-booker - PUT /booking', function () {
   })
 
   it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
-    var xmlPayload = js2xmlparser('booking', payload2)
+    var xmlPayload = js2xmlparser.parse('booking', payload2)
 
     request(server)
       .post('/booking')
@@ -470,7 +471,7 @@ describe('restful-booker - PUT /booking', function () {
   });
 
   it('responds with an XML payload when PUT /booking with accept application/xml', function testPutWithXMLAccept(done){
-    xmlPayload = js2xmlparser('booking', payload2)
+    xmlPayload = js2xmlparser.parse('booking', payload2)
 
     request(server)
       .post('/booking')
