@@ -2,8 +2,8 @@
 A simple Node booking form for testing RESTful web services.
 
 # Requirements
-- Node 5.0.0
-- Mongo 2.6.5
+- Docker 1.12.0
+- Docker Compose 1.8.0
 
 # Installation
 1. Ensure mongo is up and running by executing ```mongod``` in your terminal
@@ -11,6 +11,13 @@ A simple Node booking form for testing RESTful web services.
 3. Navigate into the restful-booker root folder
 4. Run ```npm install```
 5. Run ```npm start```
+ 
+Or you can run this via Docker:
+1. Clone the repo
+2. Navigate into the restful-booker root folder
+3. Run ```docker-compose build```
+4. Run ```docker-compose up```
+5. APIs are exposed on http://localhost:3001
 
 # API
 * [GET    /ping](https://github.com/mwinteringham/restful-booker#get-ping)
@@ -121,7 +128,7 @@ POST /booking
 ##### Content-Type: application/json
 ```
 {
-    "firstname" : "Sally",
+  "firstname" : "Sally",
 	"lastname" : "Brown",
 	"totalprice" : 111,
 	"depositpaid" : true,
@@ -212,7 +219,7 @@ PUT /booking/1
 ##### Content-Type: application/json
 ```
 {
-    "firstname" : "Sally",
+  "firstname" : "Sally",
 	"lastname" : "Brown",
 	"totalprice" : 111,
 	"depositpaid" : true,
