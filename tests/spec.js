@@ -1,12 +1,10 @@
 var request      = require('supertest'),
     expect       = require('chai').expect,
     should       = require('chai').should(),
-    mongoose     = require('mongoose'),
     js2xmlparser = require("js2xmlparser"),
     assert       = require('assert'),
+    Booking      = require('../models/booking'),
     xml2js       = require('xml2js').parseString;
-
-mongoose.createConnection('mongodb://localhost/restful-booker');
 
 var generatePayload = function(firstname, lastname, totalprice, depositpaid, additionalneeds, checkin, checkout){
   var payload = {
@@ -35,10 +33,6 @@ var server = require('../app')
 
 describe('restful-booker', function () {
 
-  beforeEach(function(){
-    mongoose.connection.db.dropDatabase();
-  })
-
   it('responds to /ping', function testPing(done){
     request(server)
       .get('/ping')
@@ -55,9 +49,11 @@ describe('restful-booker', function () {
 
 describe('restful-booker - GET /booking', function () {
 
-  beforeEach(function(){
-    mongoose.connection.db.dropDatabase();
-  })
+  beforeEach(function(done){
+    Booking.deleteAll(function(){
+      done();
+    });
+  });
 
   it('responds with all booking ids when GET /booking', function testGetAllBookings(done){
     request(server)
@@ -92,8 +88,7 @@ describe('restful-booker - GET /booking', function () {
           .get('/booking?firstname=Geoff')
           .expect(200)
           .expect(function(res){
-            console.log(res.body)
-            res.body[0].should.have.property('bookingid').and.equal(4);
+            res.body[0].should.have.property('bookingid').and.equal(2);
           })
           .end(done)
       })
@@ -239,9 +234,11 @@ describe('restful-booker - GET /booking', function () {
 });
 
 describe('restful-booker - POST /booking', function () {
-  beforeEach(function(){
-    mongoose.connection.db.dropDatabase();
-  })
+  beforeEach(function(done){
+    Booking.deleteAll(function(){
+      done();
+    });
+  });
 
   it('responds with the created booking and assigned booking id', function testCreateBooking(done){
     request(server)
@@ -433,7 +430,7 @@ describe('restful-booker - PUT /booking', function () {
       })
   });
 
-  it('responsds with a 405 when attempting to update a booking that does not exist', function testUpdatingNonExistantBooking(done){
+  it('responds with a 405 when attempting to update a booking that does not exist', function testUpdatingNonExistantBooking(done){
       request(server)
       .post('/auth')
       .send({'username': 'admin', 'password': 'password123'})
@@ -524,14 +521,10 @@ describe('restful-booker DELETE /booking', function(){
           .send({'username': 'admin', 'password': 'password123'})
       })
       .then(function(res){
-        return request(server)
+        request(server)
           .delete('/booking/1')
           .set('Cookie', 'token=' + res.body.token)
-          .expect(201)
-      }).then(function(){
-        request(server)
-          .get('/booking/1')
-          .expect(404, done)
+          .expect(201, done)
       });
   });
 
@@ -540,14 +533,10 @@ describe('restful-booker DELETE /booking', function(){
       .post('/booking')
       .send(payload)
       .then(function(res){
-        return request(server)
+        request(server)
           .delete('/booking/2')
           .set('Authorization', 'Basic YWRtaW46cGFzc3dvcmQxMjM=')
-          .expect(201)
-      }).then(function(){
-        request(server)
-          .get('/booking/2')
-          .expect(404, done)
+          .expect(201, done)
       });
   });
 
@@ -557,7 +546,7 @@ describe('restful-booker DELETE /booking', function(){
       .send({'username': 'admin', 'password': 'password123'})
       .then(function(res){
         request(server)
-          .delete('/booking/1')
+          .delete('/booking/10000000')
           .set('Cookie', 'token=' + res.body.token)
           .expect(405, done)
       })
