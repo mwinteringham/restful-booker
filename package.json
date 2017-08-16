@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "SEED=true node ./bin/www",
     "test": "mocha -R spec tests/spec.js"
   },
   "dependencies": {
@@ -13,10 +13,11 @@
     "debug": "^2.6.1",
     "express": "^4.15.0",
     "express-xml-bodyparser": "^0.3.0",
-    "pug": "^2.0.0-beta9",
     "js2xmlparser": "^3.0.0",
-    "mongoose": "^4.2.9",
-    "morgan": "^1.8.1"
+    "morgan": "^1.8.1",
+    "nedb": "^1.8.0",
+    "pug": "^2.0.0-beta9",
+    "validate.js": "^0.11.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",

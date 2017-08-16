@@ -3,30 +3,26 @@ var router  = express.Router(),
     parse   = require('../helpers/parser'),
     crypto = require('crypto'),
     Booking = require('../models/booking'),
-    Counter = require('../models/counters'),
+    validator = require('../helpers/validator'),
     creator = require('../helpers/bookingcreator'),
     globalLogins = {};
 
-Booking.deleteAll(function(err){
-  if(err) return console.error(err);
+if(process.env.SEED === 'true'){
+  var count = 1;
 
-  Counter.resetCounter(function() {
-    var count = 1;
+  (function createBooking(){
+    var newBooking = creator.createBooking()
 
-    (function createBooking(){
-      var newBooking = creator.createBooking()
+    Booking.create(newBooking, function(err, result){
+      if(err) return console.error(err);
 
-      Booking.create(newBooking, function(err, result){
-        if(err) return console.error(err);
-
-        if(count < 10){
-          count++;
-          createBooking();
-        }
-      });
-    })()
-  });
-});
+      if(count < 10){
+        count++;
+        createBooking();
+      }
+    });
+  })()
+};
 
 router.get('/ping', function(req, res, next) {
   res.sendStatus(201);
@@ -80,41 +76,57 @@ router.get('/booking/:id',function(req, res, next){
 
 router.post('/booking', function(req, res, next) {
   newBooking = req.body;
-
   if(req.headers['content-type'] === 'text/xml') newBooking = newBooking.booking;
 
-  Booking.create(newBooking, function(err, booking){
-    if(err)
-      res.sendStatus(500);
-    else {
-      var record = parse.bookingWithId(req, booking);
+  validator.scrubAndValidate(newBooking, function(payload, msg){
+    if(!msg){
 
-      if(!record){
-        res.sendStatus(418);
-      } else {
-        res.send(record);
-      }
+
+      Booking.create(newBooking, function(err, booking){
+        if(err)
+          res.sendStatus(500);
+        else {
+          var record = parse.bookingWithId(req, booking);
+
+          if(!record){
+            res.sendStatus(418);
+          } else {
+            res.send(record);
+          }
+        }
+      })
+    } else {
+      res.sendStatus(500);
     }
   })
 });
 
 router.put('/booking/:id', function(req, res, next) {
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
-    Booking.update(req.params.id, req.body, function(err){
-      Booking.get(req.params.id, function(err, record){
-        if(record){
-          var booking = parse.booking(req.headers.accept, record);
+    updatedBooking = req.body;
+    if(req.headers['content-type'] === 'text/xml') updatedBooking = updatedBooking.booking;
 
-          if(!booking){
-            res.sendStatus(418);
-          } else {
-            res.send(booking);
-          }
-        } else {
-          res.sendStatus(405);
-        }
-      })
-    })
+    validator.scrubAndValidate(updatedBooking, function(payload, msg){
+      if(!msg){
+        Booking.update(req.params.id, updatedBooking, function(err){
+          Booking.get(req.params.id, function(err, record){
+            if(record){
+              var booking = parse.booking(req.headers.accept, record);
+
+              if(!booking){
+                res.sendStatus(418);
+              } else {
+                res.send(booking);
+              }
+            } else {
+              res.sendStatus(405);
+            }
+          })
+        })
+      } else {
+        res.sendStatus(400);
+      }
+    });
   } else {
     res.sendStatus(403);
   }

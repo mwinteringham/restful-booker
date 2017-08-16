@@ -1,23 +1,18 @@
 FROM ubuntu:latest
 
-# Installation:
-# Import MongoDB public GPG key AND create a MongoDB list file
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv EA312927
-RUN echo "deb http://repo.mongodb.org/apt/ubuntu $(cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2)/mongodb-org/3.2 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+RUN apt-get update && apt-get install -y sudo curl && rm -rf /var/lib/apt/lists/*
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+RUN echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
 
-# Update apt-get sources AND install sudo 
-RUN apt-get update && apt-get install -y sudo
-
-# Install MongoDB
-RUN apt-get install -y mongodb-org
+# Update apt-get sources AND install MongoDB
+RUN apt-get update && sudo apt-get install -y --allow-unauthenticated mongodb-org
 
 # Create the MongoDB data directory
 RUN mkdir -p /data/db
 
 # Install node
-RUN apt-get -y install curl
-RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
+RUN sudo apt-get install -y npm
 
 # Copy restful-booker across
 RUN mkdir /restful-booker

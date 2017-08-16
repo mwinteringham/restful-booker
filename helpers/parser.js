@@ -19,8 +19,8 @@ exports.booking = function(accept, rawBooking){
 	var booking = {
     'firstname' : rawBooking.firstname,
     'lastname' : rawBooking.lastname,
-    'totalprice' : rawBooking.totalprice,
-    'depositpaid' : rawBooking.depositpaid,
+    'totalprice' : parseInt(rawBooking.totalprice),
+    'depositpaid' : Boolean(rawBooking.depositpaid),
     'bookingdates' : {
       'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
       'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
@@ -50,8 +50,8 @@ exports.bookingWithId = function(req, rawBooking){
   var booking = {
     'firstname' : rawBooking.firstname,
     'lastname' : rawBooking.lastname,
-    'totalprice' : rawBooking.totalprice,
-    'depositpaid' : rawBooking.depositpaid,
+    'totalprice' : parseInt(rawBooking.totalprice),
+    'depositpaid' : Boolean(rawBooking.depositpaid),
     'bookingdates' : {
       'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
       'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")

@@ -1,37 +1,11 @@
-var mongoose = require('mongoose'),
-    dateFormat = require('dateformat'),
-    counter = require('./counters');
+var Datastore = require('nedb');
+var db = new Datastore();
+var counter = 0;
 
-mongoose.connect('mongodb://localhost/restful-booker');
-
-mongoose.Promise = global.Promise;
-
-var bookingSchema = mongoose.Schema({
-    bookingid: {type: Number},
-    firstname: { type: String, required: true},
-    lastname: { type: String, required: true},
-    totalprice: { type: Number, required: true},
-    depositpaid: { type: Boolean, required: true},
-    bookingdates: {
-      checkin: { type: Date, required: true},
-      checkout: { type: Date, required: true}
-    },
-    additionalneeds: { type: String, required: false}
-  }, { versionKey: false });
-
-bookingSchema.pre('save', function(next) {
-    var doc = this;
-
-    counter.bumpId(doc, function(id){
-      doc.bookingid = id;
-      next();
-    });
-});
-
-var Booking = mongoose.model('Booking', bookingSchema);
+var booking = new Datastore();
 
 exports.getIDs = function(query, callback){
-  Booking.find(query).select('bookingid -_id').exec(function(err, booking){
+  booking.find(query, function(err, booking){
     if(err){
       callback(err);
     } else {
@@ -41,41 +15,62 @@ exports.getIDs = function(query, callback){
 },
 
 exports.get = function(id, callback){
-  Booking.find({'bookingid': id}, function(err, booking){
+  booking.findOne({'bookingid': parseInt(id)}, function(err, booking) {
     if(err){
       callback(err, null)
-    } else {
-      callback(null, booking[0]);
-    }
-  })
-},
-
-exports.create = function(payload, callback){
-  var newBooking = new Booking(payload);
-
-  newBooking.save(function(err, booking){
-    if(err){
-      callback(err);
     } else {
       callback(null, booking);
     }
   });
 },
 
+exports.create = function(payload, callback){
+  counter++;
+  payload.bookingid = counter;
+
+  booking.insert(payload, function(err, doc) {
+    if(err){
+      callback(err);
+    } else {
+      callback(null, payload);
+    }
+  });
+},
+
 exports.update = function(id, updatedBooking, callback){
-  Booking.find({'bookingid': id}).update(updatedBooking, function(err){
-    callback(err);
+  var self = booking;
+
+  booking.findOne({'bookingid': parseInt(id)}, function(err, booking) {
+    if(err || !booking){
+      callback(err)
+    } else {
+      updatedBooking.bookingid = booking.bookingid;
+
+      self.update({'bookingid': parseInt(id)}, updatedBooking, function(err){
+        if(err){
+          callback(err);
+        } else {
+          callback(null);
+        }
+      });
+    }
   });
 },
 
 exports.delete = function(id, callback){
-  Booking.remove({'bookingid': id}, function(err){
-    callback(null);
+  booking.remove({'bookingid': parseInt(id)}, function(err){
+    if(err){
+      callback(err);
+    } else {
+      callback(null);
+    }
   })
-}
+},
 
 exports.deleteAll = function(callback){
-  Booking.remove({}, function(err){
-    callback(null);
-  })
+  counter = 0;
+
+  booking.remove({}, function(err){
+    callback();
+  });
 }
