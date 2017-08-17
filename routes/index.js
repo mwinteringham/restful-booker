@@ -5,6 +5,7 @@ var router  = express.Router(),
     Booking = require('../models/booking'),
     validator = require('../helpers/validator'),
     creator = require('../helpers/bookingcreator'),
+    fs      = require('fs'),
     globalLogins = {};
 
 if(process.env.SEED === 'true'){
@@ -23,6 +24,12 @@ if(process.env.SEED === 'true'){
     });
   })()
 };
+
+router.get('/', function(req, res, next){
+  var html = fs.readFileSync(__dirname + '/../static/index.html', 'utf8')
+
+  res.send(html)
+});
 
 router.get('/ping', function(req, res, next) {
   res.sendStatus(201);
