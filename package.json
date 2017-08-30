@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "SEED=true node ./bin/www",
+    "start": "cross-env SEED=true node ./bin/www",
     "test": "mocha -R spec tests/spec.js"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "chai": "^3.4.1",
+    "cross-env": "^5.0.5",
     "mocha": "^3.2.0",
     "supertest": "^3.0.0",
     "xml2js": "^0.4.15"
