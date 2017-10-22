@@ -9,6 +9,7 @@
   "dependencies": {
     "body-parser": "^1.17.0",
     "cookie-parser": "^1.4.3",
+    "cross-env": "^5.1.0",
     "dateformat": "^2.0.0",
     "debug": "^2.6.1",
     "express": "^4.15.0",
