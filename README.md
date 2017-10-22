@@ -2,8 +2,8 @@
 A simple Node booking form for testing RESTful web services.
 
 # Requirements
-- Docker 1.12.0
-- Docker Compose 1.8.0
+- Docker 17.09.0
+- Docker Compose 1.16.1
 
 # Installation
 1. Ensure mongo is up and running by executing ```mongod``` in your terminal
