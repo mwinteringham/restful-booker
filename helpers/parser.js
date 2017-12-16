@@ -16,68 +16,76 @@ exports.bookingids = function(req, rawBooking){
 }
 
 exports.booking = function(accept, rawBooking){
-	var booking = {
-    'firstname' : rawBooking.firstname,
-    'lastname' : rawBooking.lastname,
-    'totalprice' : parseInt(rawBooking.totalprice),
-    'depositpaid' : Boolean(rawBooking.depositpaid),
-    'bookingdates' : {
-      'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-      'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+  try {
+    var booking = {
+      'firstname' : rawBooking.firstname,
+      'lastname' : rawBooking.lastname,
+      'totalprice' : parseInt(rawBooking.totalprice),
+      'depositpaid' : Boolean(rawBooking.depositpaid),
+      'bookingdates' : {
+        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
+        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+      }
     }
-  }
 
-  if(typeof(rawBooking.additionalneeds) !== 'undefined'){
-    booking.additionalneeds = rawBooking.additionalneeds;
-  }
+    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
+      booking.additionalneeds = rawBooking.additionalneeds;
+    }
 
-  switch(accept){
-    case 'application/xml':
-      return js2xmlparser.parse('booking', booking);
-      break;
-    case 'application/json':
-      return booking;
-      break;
-    case '*/*':
-      return booking;
-      break;
-    default:
-      return null;
+    switch(accept){
+      case 'application/xml':
+        return js2xmlparser.parse('booking', booking);
+        break;
+      case 'application/json':
+        return booking;
+        break;
+      case '*/*':
+        return booking;
+        break;
+      default:
+        return null;
+    }
+  } catch(err) {
+    return err.message;
   }
 }
 
 exports.bookingWithId = function(req, rawBooking){
-  var booking = {
-    'firstname' : rawBooking.firstname,
-    'lastname' : rawBooking.lastname,
-    'totalprice' : parseInt(rawBooking.totalprice),
-    'depositpaid' : Boolean(rawBooking.depositpaid),
-    'bookingdates' : {
-      'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-      'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+  try {
+    var booking = {
+      'firstname' : rawBooking.firstname,
+      'lastname' : rawBooking.lastname,
+      'totalprice' : parseInt(rawBooking.totalprice),
+      'depositpaid' : Boolean(rawBooking.depositpaid),
+      'bookingdates' : {
+        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
+        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+      }
     }
-  }
-
-  if(typeof(rawBooking.additionalneeds) !== 'undefined'){
-    booking.additionalneeds = rawBooking.additionalneeds;
-  }
-
-  var payload = {
-    "bookingid" : rawBooking.bookingid,
-    "booking" : booking
-  }
-
-  switch(req.headers.accept){
-    case 'application/xml':
-      return js2xmlparser.parse('created-booking', payload);
-      break;
-    case 'application/json':
-      return payload;
-      break;
-    case '*/*':
-      return payload;
-      break;
-    default:
-      return null;
+  
+    if(typeof(rawBooking.additionalneeds) !== 'undefined'){
+      booking.additionalneeds = rawBooking.additionalneeds;
+    }
+  
+    var payload = {
+      "bookingid" : rawBooking.bookingid,
+      "booking" : booking
+    }
+  
+    switch(req.headers.accept){
+      case 'application/xml':
+        return js2xmlparser.parse('created-booking', payload);
+        break;
+      case 'application/json':
+        return payload;
+        break;
+      case '*/*':
+        return payload;
+        break;
+      default:
+        return null;
+    }
+  } catch(err) {
+    return err.message;
   }
 }
