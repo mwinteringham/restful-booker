@@ -188,7 +188,7 @@ POST /auth
 ```
 #### Response
 ```
-VHgTAuGPxvMsH1p
+{"token":"4435e80661e070c"}
 ```
 
 ## PUT /booking/{id}
