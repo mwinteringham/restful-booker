@@ -44,6 +44,47 @@ router.get('/ping', function(req, res, next) {
   res.sendStatus(201);
 });
 
+/**
+ * @api {get} /booking Return booking ids
+ * @apiName Booking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.
+ *
+ * @apiParam {String} [firstname] Return bookings with a specific firstname
+ * @apiParam {String} [lastname]  Return bookings with a specific lastname
+ * @apiParam {date}   [checkin]   Return bookings that have a checkin date greater than or equal to the set checkin date. Format must be CCYY-MM-DD
+ * @apiParam {date}   [checkout]  Return bookings that have a checkout date greater than or equal to the set checkout date. Format must be CCYY-MM-DD
+ * 
+ * @apiExample Example usage:
+ * curl -i https://restful-booker.herokuapp.com/booking
+ * 
+ * @apiExample Example usage:
+ * curl -i https://restful-booker.herokuapp.com/booking?firstname=sally&lastname=brown
+ * 
+ * @apiExample Example usage:
+ * curl -i https://restful-booker.herokuapp.com/booking?checkin=2014-03-13&checkout=2014-05-21
+ * 
+ * @apiSuccess {String} OK Default HTTP 200 response
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * 
+ * [
+  {
+    "bookingid": 1
+  },
+  {
+    "bookingid": 2
+  },
+  {
+    "bookingid": 3
+  },
+  {
+    "bookingid": 4
+  }
+] 
+ */
 router.get('/booking', function(req, res, next) {
   var query = {};
 
