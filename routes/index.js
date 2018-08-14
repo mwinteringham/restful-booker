@@ -32,7 +32,7 @@ if(process.env.SEED === 'true'){
  * @apiVersion 1.0.0
  * @apiDescription A simple health check endpoint to confirm whether the API is up and running.
  *
- * @apiExample Example usage:
+ * @apiExample Ping server:
  * curl -i https://restful-booker.herokuapp.com/ping
  * 
  * @apiSuccess {String} OK Default HTTP 201 response
@@ -56,19 +56,19 @@ router.get('/ping', function(req, res, next) {
  * @apiParam {date}   [checkin]   Return bookings that have a checkin date greater than or equal to the set checkin date. Format must be CCYY-MM-DD
  * @apiParam {date}   [checkout]  Return bookings that have a checkout date greater than or equal to the set checkout date. Format must be CCYY-MM-DD
  * 
- * @apiExample Example usage:
+ * @apiExample Example 1 (All IDs):
  * curl -i https://restful-booker.herokuapp.com/booking
  * 
- * @apiExample Example usage:
+ * @apiExample Example 2 (Filter by name):
  * curl -i https://restful-booker.herokuapp.com/booking?firstname=sally&lastname=brown
  * 
- * @apiExample Example usage:
+ * @apiExample Example 3 (Filter by checkin/checkout date):
  * curl -i https://restful-booker.herokuapp.com/booking?checkin=2014-03-13&checkout=2014-05-21
  * 
  * @apiSuccess {object[]} object Array of objects that contain unique booking IDs
  * @apiSuccess {number} object.bookingid ID of a specific booking that matches search criteria
  * 
- * @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Response:
  * HTTP/1.1 200 OK
  * 
  * [
@@ -85,7 +85,7 @@ router.get('/ping', function(req, res, next) {
     "bookingid": 4
   }
 ] 
- */
+*/
 router.get('/booking', function(req, res, next) {
   var query = {};
 
@@ -123,12 +123,12 @@ router.get('/booking', function(req, res, next) {
  * @apiVersion 1.0.0
  * @apiDescription Returns a specific booking based upon the booking id provided
  * 
- * @apiParam (UrlParam) {String} id The id of the booking you would like to retrieve
+ * @apiParam (Url Parameter) {String} id The id of the booking you would like to retrieve
  * 
  * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
  * 
- * @apiExample Example usage:
- * curl -i https://restful-booker.herokuapp.com/1
+ * @apiExample Example 1 (Get booking):
+ * curl -i https://restful-booker.herokuapp.com/booking/1
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
  * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
@@ -139,7 +139,7 @@ router.get('/booking', function(req, res, next) {
  * @apiSuccess {Date}    bookingdates.checkout Date the guest is checking out
  * @apiSuccess {String}  additionalneeds       Any other needs the guest has
  * 
- * @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} JSON Response:
  * HTTP/1.1 200 OK
  * 
  * {
@@ -153,7 +153,7 @@ router.get('/booking', function(req, res, next) {
     },
     "additionalneeds": "Breakfast"
 }
- * @apiSuccessExample {xml} Success-Response:
+ * @apiSuccessExample {xml} XML Response:
  * HTTP/1.1 200 OK
  * 
  * <booking>
@@ -184,14 +184,108 @@ router.get('/booking/:id',function(req, res, next){
   })
 });
 
+/**
+ * @api {post} /booking CreateBooking
+ * @apiName CreateBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Creates a new booking in the API
+ * 
+ * @apiParam (Request body) {String}  firstname             Firstname for the guest who made the booking
+ * @apiParam (Request body) {String}  lastname              Lastname for the guest who made the booking
+ * @apiParam (Request body) {Number}  totalprice            The total price for the booking
+ * @apiParam (Request body) {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiParam (Request body) {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiParam (Request body) {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiParam (Request body) {String}  additionalneeds       Any other needs the guest has
+ * 
+ * @apiHeader {string} Content-Type=application/json Sets the format of payload you are sending. Can be application/json or text/xml
+ * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
+ * 
+ * @apiExample JSON example usage:
+ * curl -X POST \
+  http://localhost:3001/booking \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "firstname" : "Jim",
+    "lastname" : "Brown",
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "Breakfast"
+}'
+ * @apiExample XML example usage:
+ * curl -X POST \
+  http://localhost:3001/booking \
+  -H 'Content-Type: text/xml' \
+  -d '<booking>
+    <firstname>Jim</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+      <checkin>2018-01-01</checkin>
+      <checkout>2019-01-01</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+  </booking>'
+ * 
+ * @apiSuccess {Number}  bookingid                     ID for newly created booking
+ * @apiSuccess {Object}  booking                       Object that contains 
+ * @apiSuccess {String}  booking.firstname             Firstname for the guest who made the booking
+ * @apiSuccess {String}  booking.lastname              Lastname for the guest who made the booking
+ * @apiSuccess {Number}  booking.totalprice            The total price for the booking
+ * @apiSuccess {Boolean} booking.depositpaid           Whether the deposit has been paid or not
+ * @apiSuccess {Object}  booking.bookingdates          Sub-object that contains the checkin and checkout dates
+ * @apiSuccess {Date}    booking.bookingdates.checkin  Date the guest is checking in
+ * @apiSuccess {Date}    booking.bookingdates.checkout Date the guest is checking out
+ * @apiSuccess {String}  booking.additionalneeds       Any other needs the guest has
+ * 
+ * @apiSuccessExample {json} JSON Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "bookingid": 1,
+    "booking": {
+        "firstname": "Jim",
+        "lastname": "Brown",
+        "totalprice": 111,
+        "depositpaid": true,
+        "bookingdates": {
+            "checkin": "2018-01-01",
+            "checkout": "2019-01-01"
+        },
+        "additionalneeds": "Breakfast"
+    }
+}
+ * @apiSuccessExample {xml} XML Response:
+ * HTTP/1.1 200 OK
+ * 
+ * <?xml version='1.0'?>
+<created-booking>
+    <bookingid>1</bookingid>
+    <booking>
+        <firstname>Jim</firstname>
+        <lastname>Brown</lastname>
+        <totalprice>111</totalprice>
+        <depositpaid>true</depositpaid>
+        <bookingdates>
+            <checkin>2018-01-01</checkin>
+            <checkout>2019-01-01</checkout>
+        </bookingdates>
+        <additionalneeds>Breakfast</additionalneeds>
+    </booking>
+</created-booking>
+ */
 router.post('/booking', function(req, res, next) {
   newBooking = req.body;
   if(req.headers['content-type'] === 'text/xml') newBooking = newBooking.booking;
 
   validator.scrubAndValidate(newBooking, function(payload, msg){
     if(!msg){
-
-
       Booking.create(newBooking, function(err, booking){
         if(err)
           res.sendStatus(500);
@@ -211,6 +305,101 @@ router.post('/booking', function(req, res, next) {
   })
 });
 
+/**
+ * @api {put} /booking/:id UpdateBooking
+ * @apiName UpdateBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Updates a current booking
+ * 
+ * @apiParam (Url Parameter) {Number} id                    ID for the booking you want to update
+ * 
+ * @apiParam (Request body) {String}  firstname             Firstname for the guest who made the booking
+ * @apiParam (Request body) {String}  lastname              Lastname for the guest who made the booking
+ * @apiParam (Request body) {Number}  totalprice            The total price for the booking
+ * @apiParam (Request body) {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiParam (Request body) {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiParam (Request body) {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiParam (Request body) {String}  additionalneeds       Any other needs the guest has
+ * 
+ * @apiHeader {string} Content-Type=application/json                    Sets the format of payload you are sending. Can be application/json or text/xml
+ * @apiHeader {string} Accept=application/json                          Sets what format the response body is returned in. Can be application/json or application/xml
+ * @apiHeader {string} [Cookie=token=<token_value>]                     Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation
+ * @apiHeader {string} [Authorisation=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header
+ * 
+ * @apiExample JSON example usage:
+ * curl -X PUT \
+  http://localhost:3001/booking/1 \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -H 'Cookie: token=abc123' \
+  -d '{
+    "firstname" : "James",
+    "lastname" : "Brown",
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "Breakfast"
+}'
+ * @apiExample XML example usage:
+ * curl -X PUT \
+  http://localhost:3001/booking/1 \
+  -H 'Content-Type: text/xml' \
+  -H 'Accept: application/xml' \
+  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -d '<booking>
+    <firstname>James</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+      <checkin>2018-01-01</checkin>
+      <checkout>2019-01-01</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+  </booking>'
+ * 
+ * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
+ * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
+ * @apiSuccess {Number}  totalprice            The total price for the booking
+ * @apiSuccess {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiSuccess {Object}  bookingdates          Sub-object that contains the checkin and checkout dates
+ * @apiSuccess {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiSuccess {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiSuccess {String}  additionalneeds       Any other needs the guest has
+ * 
+ * @apiSuccessExample {json} JSON Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "firstname" : "James",
+    "lastname" : "Brown",
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "Breakfast"
+}
+ * @apiSuccessExample {xml} XML Response:
+ * HTTP/1.1 200 OK
+ * 
+ * <booking>
+    <firstname>James</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+      <checkin>2018-01-01</checkin>
+      <checkout>2019-01-01</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+</booking>
+ */
 router.put('/booking/:id', function(req, res, next) {
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
     updatedBooking = req.body;
