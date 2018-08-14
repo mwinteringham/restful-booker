@@ -25,12 +25,21 @@ if(process.env.SEED === 'true'){
   })()
 };
 
-router.get('/', function(req, res, next){
-  var html = fs.readFileSync(__dirname + '/../static/index.html', 'utf8')
-
-  res.send(html)
-});
-
+/**
+ * @api {get} /ping Health check
+ * @apiName Ping
+ * @apiGroup Ping
+ * @apiVersion 1.0.0
+ * @apiDescription A simple health check endpoint to confirm whether the API is up and running.
+ *
+ * @apiExample Example usage:
+ * curl -i https://restful-booker.herokuapp.com/ping
+ * 
+ * @apiSuccess {String} OK Default HTTP 201 response
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 201 Created
+ */
 router.get('/ping', function(req, res, next) {
   res.sendStatus(201);
 });

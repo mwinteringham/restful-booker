@@ -1,0 +1,10 @@
+{
+    "name": "restful-booker",
+    "description": "API documentation for the playground API restful-booker",
+    "title": "Restful-booker",
+    "url" : "https://www.mwtestconsultancy.co.uk",
+    "sampleUrl": "https://restful-booker.herokuapp.com",
+    "template": {
+        "withGenerator": true
+    }
+}

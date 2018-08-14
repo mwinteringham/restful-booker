@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "cross-env SEED=true node ./bin/www",
-    "test": "mocha -R spec tests/spec.js"
+    "test": "mocha -R spec tests/spec.js",
+    "build_docs": "apidoc -i ./routes/ -o public/apidoc/"
   },
   "dependencies": {
     "body-parser": "^1.17.0",
