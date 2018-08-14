@@ -37,7 +37,7 @@ if(process.env.SEED === 'true'){
  * 
  * @apiSuccess {String} OK Default HTTP 201 response
  * 
- * @apiSuccessExample {json} Success-Response:
+ * @apiSuccessExample {json} Response:
  *     HTTP/1.1 201 Created
  */
 router.get('/ping', function(req, res, next) {
@@ -204,7 +204,7 @@ router.get('/booking/:id',function(req, res, next){
  * 
  * @apiExample JSON example usage:
  * curl -X POST \
-  http://localhost:3001/booking \
+  https://restful-booker.herokuapp.com/booking \
   -H 'Content-Type: application/json' \
   -d '{
     "firstname" : "Jim",
@@ -219,7 +219,7 @@ router.get('/booking/:id',function(req, res, next){
 }'
  * @apiExample XML example usage:
  * curl -X POST \
-  http://localhost:3001/booking \
+  https://restful-booker.herokuapp.com/booking \
   -H 'Content-Type: text/xml' \
   -d '<booking>
     <firstname>Jim</firstname>
@@ -329,7 +329,7 @@ router.post('/booking', function(req, res, next) {
  * 
  * @apiExample JSON example usage:
  * curl -X PUT \
-  http://localhost:3001/booking/1 \
+  https://restful-booker.herokuapp.com/booking/1 \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -H 'Cookie: token=abc123' \
@@ -346,7 +346,7 @@ router.post('/booking', function(req, res, next) {
 }'
  * @apiExample XML example usage:
  * curl -X PUT \
-  http://localhost:3001/booking/1 \
+  https://restful-booker.herokuapp.com/booking/1 \
   -H 'Content-Type: text/xml' \
   -H 'Accept: application/xml' \
   -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
@@ -431,6 +431,35 @@ router.put('/booking/:id', function(req, res, next) {
   }
 });
 
+/**
+ * @api {delete} /booking/1 DeleteBooking
+ * @apiName DeleteBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.
+ *
+ * @apiParam (Url Parameter) {Number} id  ID for the booking you want to update
+ * 
+ * @apiHeader {string} [Cookie=token=<token_value>]                     Sets an authorisation token to access the DELETE endpoint, can be used as an alternative to the Authorisation
+ * @apiHeader {string} [Authorisation=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the DELETE endpoint, can be used as an alternative to the Cookie header
+ * 
+ * @apiExample Example 1 (Cookie):
+ * curl -X DELETE \
+  https://restful-booker.herokuapp.com/booking/1 \
+  -H 'Content-Type: application/json' \
+  -H 'Cookie: token=abc123'
+ *
+ * @apiExample Example 2 (Basic auth):
+ * curl -X DELETE \
+  https://restful-booker.herokuapp.com/booking/1 \
+  -H 'Content-Type: application/json' \
+  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM='
+ * 
+ * @apiSuccess {String} OK Default HTTP 201 response
+ * 
+ * @apiSuccessExample {json} Response:
+ *     HTTP/1.1 201 Created
+*/
 router.delete('/booking/:id', function(req, res, next) {
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
     Booking.get(req.params.id, function(err, record){
@@ -447,6 +476,35 @@ router.delete('/booking/:id', function(req, res, next) {
   }
 });
 
+/**
+ * @api {post} /auth CreateToken
+ * @apiName CreateToken
+ * @apiGroup Auth
+ * @apiVersion 1.0.0
+ * @apiDescription Creates a new auth token to use for access to the PUT and DELETE /booking
+ * 
+ * @apiParam (Request body) {String}  username=admin        Username for authentication
+ * @apiParam (Request body) {String}  password=password123  Password for authentication
+ * 
+ * @apiHeader {string} Content-Type=application/json        Sets the format of payload you are sending
+ * 
+ * @apiExample Example 1:
+ * curl -X POST \
+  https://restful-booker.herokuapp.com/auth \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "username" : "admin",
+    "password" : "password123"
+}'
+ * @apiSuccess {String}  token  Token to use in future requests
+ * 
+ * @apiSuccessExample {json} Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "token": "abc123"
+}
+ */
 router.post('/auth', function(req, res, next){
   if(req.body.username === "admin" && req.body.password === "password123"){
     var token = crypto.randomBytes(Math.ceil(15/2))

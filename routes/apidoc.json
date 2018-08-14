@@ -5,6 +5,9 @@
     "url" : "https://www.mwtestconsultancy.co.uk",
     "order": [
         "GetBookings",
-        "GetBooking"
+        "GetBooking",
+        "CreateBooking",
+        "UpdateBooking",
+        "DeleteBooking"
     ]
 }
