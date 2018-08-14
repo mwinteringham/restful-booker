@@ -26,7 +26,7 @@ if(process.env.SEED === 'true'){
 };
 
 /**
- * @api {get} /ping Health check
+ * @api {get} /ping HealthCheck
  * @apiName Ping
  * @apiGroup Ping
  * @apiVersion 1.0.0
@@ -45,8 +45,8 @@ router.get('/ping', function(req, res, next) {
 });
 
 /**
- * @api {get} /booking Return booking ids
- * @apiName Booking
+ * @api {get} /booking GetBookingIds
+ * @apiName GetBookings
  * @apiGroup Booking
  * @apiVersion 1.0.0
  * @apiDescription Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.
@@ -65,7 +65,8 @@ router.get('/ping', function(req, res, next) {
  * @apiExample Example usage:
  * curl -i https://restful-booker.herokuapp.com/booking?checkin=2014-03-13&checkout=2014-05-21
  * 
- * @apiSuccess {String} OK Default HTTP 200 response
+ * @apiSuccess {object[]} object Array of objects that contain unique booking IDs
+ * @apiSuccess {number} object.bookingid ID of a specific booking that matches search criteria
  * 
  * @apiSuccessExample {json} Success-Response:
  * HTTP/1.1 200 OK
@@ -115,6 +116,58 @@ router.get('/booking', function(req, res, next) {
   })
 });
 
+/**
+ * @api {get} /booking/:id GetBooking
+ * @apiName GetBooking
+ * @apiGroup Booking
+ * @apiVersion 1.0.0
+ * @apiDescription Returns a specific booking based upon the booking id provided
+ * 
+ * @apiParam (UrlParam) {String} id The id of the booking you would like to retrieve
+ * 
+ * @apiHeader {string} Accept=application/json Sets what format the response body is returned in. Can be application/json or application/xml
+ * 
+ * @apiExample Example usage:
+ * curl -i https://restful-booker.herokuapp.com/1
+ * 
+ * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
+ * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
+ * @apiSuccess {Number}  totalprice            The total price for the booking
+ * @apiSuccess {Boolean} depositpaid           Whether the deposit has been paid or not
+ * @apiSuccess {Object}  bookingdates          Sub-object that contains the checkin and checkout dates
+ * @apiSuccess {Date}    bookingdates.checkin  Date the guest is checking in
+ * @apiSuccess {Date}    bookingdates.checkout Date the guest is checking out
+ * @apiSuccess {String}  additionalneeds       Any other needs the guest has
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * 
+ * {
+    "firstname": "Sally",
+    "lastname": "Brown",
+    "totalprice": 111,
+    "depositpaid": true,
+    "bookingdates": {
+        "checkin": "2013-02-23",
+        "checkout": "2014-10-23"
+    },
+    "additionalneeds": "Breakfast"
+}
+ * @apiSuccessExample {xml} Success-Response:
+ * HTTP/1.1 200 OK
+ * 
+ * <booking>
+    <firstname>Sally</firstname>
+    <lastname>Brown</lastname>
+    <totalprice>111</totalprice>
+    <depositpaid>true</depositpaid>
+    <bookingdates>
+        <checkin>2013-02-23</checkin>
+        <checkout>2014-10-23</checkout>
+    </bookingdates>
+    <additionalneeds>Breakfast</additionalneeds>
+</booking>
+ */
 router.get('/booking/:id',function(req, res, next){
   Booking.get(req.params.id, function(err, record){
     if(record){
