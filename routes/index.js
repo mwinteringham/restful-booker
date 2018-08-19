@@ -167,6 +167,11 @@ router.get('/booking', function(req, res, next) {
     </bookingdates>
     <additionalneeds>Breakfast</additionalneeds>
 </booking>
+ *
+ * @apiSuccessExample {url} URL Response:
+ * HTTP/1.1 200 OK
+ * 
+ * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.get('/booking/:id',function(req, res, next){
   Booking.get(req.params.id, function(err, record){
@@ -232,6 +237,12 @@ router.get('/booking/:id',function(req, res, next){
     </bookingdates>
     <additionalneeds>Breakfast</additionalneeds>
   </booking>'
+ *
+ * @apiExample URLencoded example usage:
+ * curl -X POST \
+  https://restful-booker.herokuapp.com/booking \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
  * 
  * @apiSuccess {Number}  bookingid                     ID for newly created booking
  * @apiSuccess {Object}  booking                       Object that contains 
@@ -279,6 +290,10 @@ router.get('/booking/:id',function(req, res, next){
         <additionalneeds>Breakfast</additionalneeds>
     </booking>
 </created-booking>
+ * @apiSuccessExample {url} URL Response:
+ * HTTP/1.1 200 OK
+ * 
+ * bookingid=1&booking%5Bfirstname%5D=Jim&booking%5Blastname%5D=Brown&booking%5Btotalprice%5D=111&booking%5Bdepositpaid%5D=true&booking%5Bbookingdates%5D%5Bcheckin%5D=2018-01-01&booking%5Bbookingdates%5D%5Bcheckout%5D=2019-01-01
  */
 router.post('/booking', function(req, res, next) {
   newBooking = req.body;
@@ -361,6 +376,15 @@ router.post('/booking', function(req, res, next) {
     </bookingdates>
     <additionalneeds>Breakfast</additionalneeds>
   </booking>'
+ *
+ * @apiExample URLencoded example usage:
+ * curl -X PUT \
+  https://restful-booker.herokuapp.com/booking/1 \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Accept: application/x-www-form-urlencoded' \
+  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \
+  -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'
+ * 
  * 
  * @apiSuccess {String}  firstname             Firstname for the guest who made the booking
  * @apiSuccess {String}  lastname              Lastname for the guest who made the booking
@@ -399,6 +423,11 @@ router.post('/booking', function(req, res, next) {
     </bookingdates>
     <additionalneeds>Breakfast</additionalneeds>
 </booking>
+ *
+ * @apiSuccessExample {url} URL Response:
+ * HTTP/1.1 200 OK
+ * 
+ * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.put('/booking/:id', function(req, res, next) {
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){

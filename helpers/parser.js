@@ -1,5 +1,6 @@
 var js2xmlparser = require("js2xmlparser"),
     dateFormat = require('dateformat');
+    formurlencoded = require('form-urlencoded').default;
 
 exports.bookingids = function(req, rawBooking){
   var payload = [];
@@ -38,6 +39,9 @@ exports.booking = function(accept, rawBooking){
         break;
       case 'application/json':
         return booking;
+        break;
+      case 'application/x-www-form-urlencoded':
+        return formurlencoded(booking);
         break;
       case '*/*':
         return booking;
@@ -78,6 +82,9 @@ exports.bookingWithId = function(req, rawBooking){
         break;
       case 'application/json':
         return payload;
+        break;
+      case 'application/x-www-form-urlencoded':
+        return formurlencoded(payload);
         break;
       case '*/*':
         return payload;
