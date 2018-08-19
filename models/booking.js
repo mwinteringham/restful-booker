@@ -38,21 +38,11 @@ exports.create = function(payload, callback){
 },
 
 exports.update = function(id, updatedBooking, callback){
-  var self = booking;
-
-  booking.findOne({'bookingid': parseInt(id)}, function(err, booking) {
-    if(err || !booking){
-      callback(err)
+  booking.update({'bookingid': parseInt(id)}, { $set: updatedBooking }, {}, function(err){
+    if(err){
+      callback(err);
     } else {
-      updatedBooking.bookingid = booking.bookingid;
-
-      self.update({'bookingid': parseInt(id)}, updatedBooking, function(err){
-        if(err){
-          callback(err);
-        } else {
-          callback(null);
-        }
-      });
+      callback(null);
     }
   });
 },
