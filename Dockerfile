@@ -29,6 +29,8 @@ RUN mkdir /restful-booker
 
 COPY ./ /restful-booker/
 
-RUN cd /restful-booker && npm install
+WORKDIR /restful-booker
 
-CMD mongod & sleep 5 && cd /restful-booker && npm start
+RUN npm install
+
+CMD npm start
