@@ -10,12 +10,12 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
-    "cross-env": "^5.2.0",
+    "cross-env": "^6.0.3",
     "dateformat": "^3.0.3",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-xml-bodyparser": "^0.3.0",
-    "form-urlencoded": "^3.0.1",
+    "form-urlencoded": "^4.0.1",
     "js2xmlparser": "^4.0.0",
     "morgan": "^1.9.1",
     "nedb": "^1.8.0",
@@ -24,9 +24,9 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "cross-env": "^5.2.0",
-    "mocha": "^6.2.0",
+    "cross-env": "^6.0.3",
+    "mocha": "^6.2.2",
     "supertest": "^4.0.2",
-    "xml2js": "^0.4.19"
+    "xml2js": "^0.4.22"
   }
 }
