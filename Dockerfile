@@ -12,7 +12,7 @@ RUN apt-get install -y curl
 RUN sudo apt-get install -y build-essential libssl-dev
 
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 4.2.4
+ENV NODE_VERSION 10.16.3
 
 # Install nvm with node and npm
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash \
@@ -29,6 +29,8 @@ RUN mkdir /restful-booker
 
 COPY ./ /restful-booker/
 
-RUN cd /restful-booker && npm install
+WORKDIR /restful-booker
 
-CMD mongod & sleep 5 && cd /restful-booker && npm start
+RUN npm install
+
+CMD npm start
