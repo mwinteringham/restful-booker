@@ -26,7 +26,7 @@ if(process.env.SEED === 'true'){
 };
 
 /**
- * @api {get} /ping HealthCheck
+ * @api {get} ping HealthCheck
  * @apiName Ping
  * @apiGroup Ping
  * @apiVersion 1.0.0
@@ -45,7 +45,7 @@ router.get('/ping', function(req, res, next) {
 });
 
 /**
- * @api {get} /booking GetBookingIds
+ * @api {get} booking GetBookingIds
  * @apiName GetBookings
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -117,7 +117,7 @@ router.get('/booking', function(req, res, next) {
 });
 
 /**
- * @api {get} /booking/:id GetBooking
+ * @api {get} booking/:id GetBooking
  * @apiName GetBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -190,7 +190,7 @@ router.get('/booking/:id',function(req, res, next){
 });
 
 /**
- * @api {post} /booking CreateBooking
+ * @api {post} booking CreateBooking
  * @apiName CreateBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -321,7 +321,7 @@ router.post('/booking', function(req, res, next) {
 });
 
 /**
- * @api {put} /booking/:id UpdateBooking
+ * @api {put} booking/:id UpdateBooking
  * @apiName UpdateBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -461,7 +461,7 @@ router.put('/booking/:id', function(req, res, next) {
 });
 
 /**
- * @api {patch} /booking/:id PartialUpdateBooking
+ * @api {patch} booking/:id PartialUpdateBooking
  * @apiName PartialUpdateBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -582,7 +582,7 @@ router.patch('/booking/:id', function(req, res) {
 });
 
 /**
- * @api {delete} /booking/1 DeleteBooking
+ * @api {delete} booking/1 DeleteBooking
  * @apiName DeleteBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
@@ -627,7 +627,7 @@ router.delete('/booking/:id', function(req, res, next) {
 });
 
 /**
- * @api {post} /auth CreateToken
+ * @api {post} auth CreateToken
  * @apiName CreateToken
  * @apiGroup Auth
  * @apiVersion 1.0.0
