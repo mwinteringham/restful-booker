@@ -20,6 +20,7 @@
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",
     "pug": "^3.0.0",
+    "universal-analytics": "^0.4.23",
     "validate.js": "^0.13.1"
   },
   "devDependencies": {

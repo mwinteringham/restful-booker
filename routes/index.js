@@ -6,6 +6,7 @@ var router  = express.Router(),
     validator = require('../helpers/validator'),
     creator = require('../helpers/bookingcreator'),
     fs      = require('fs'),
+    ua      = require('universal-analytics');
     globalLogins = {};
 
 if(process.env.SEED === 'true'){
@@ -25,6 +26,8 @@ if(process.env.SEED === 'true'){
   })()
 };
 
+var visitor = ua('UA-118712228-2');
+
 /**
  * @api {get} ping HealthCheck
  * @apiName Ping
@@ -41,6 +44,8 @@ if(process.env.SEED === 'true'){
  *     HTTP/1.1 201 Created
  */
 router.get('/ping', function(req, res, next) {
+  visitor.pageview('/ping', 'https://restful-booker.herokuapp.com/', "Ping").send();
+
   res.sendStatus(201);
 });
 
