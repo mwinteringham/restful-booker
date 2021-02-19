@@ -10,6 +10,14 @@
   <link href="css/style.css" rel="stylesheet" media="screen, print">
   <link href="img/favicon.ico" rel="icon" type="image/x-icon">
   <script src="vendor/polyfill.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-118712228-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-118712228-2');
+	</script>
 </head>
 <body class="container-fluid">
 
@@ -43,6 +51,7 @@
   <div class="pull-left">
     <h1>{{name}}</h1>
     {{#if description}}<h2>{{{nl2br description}}}</h2>{{/if}}
+    <p><a href="https://www.buymeacoffee.com/mwinteringham"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a tea&emoji=&slug=mwinteringham&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00"></a></p>
   </div>
   <div class="pull-right">
     {{#if template.withCompare}}
