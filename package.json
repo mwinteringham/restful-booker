@@ -10,11 +10,13 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.3",
     "dateformat": "^3.0.3",
     "debug": "^4.3.1",
     "express": "^4.17.1",
     "express-xml-bodyparser": "^0.3.0",
     "form-urlencoded": "^4.2.1",
+    "honeycomb-beeline": "^2.7.1",
     "js2xmlparser": "^4.0.1",
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",
@@ -22,7 +24,6 @@
     "universal-analytics": "^0.4.23",
     "uuid": "^8.3.1",
     "validate.js": "^0.13.1",
-    "cross-env": "^7.0.3",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
