@@ -1,6 +1,6 @@
 var js2xmlparser = require("js2xmlparser"),
-    dateFormat = require('dateformat');
-    formurlencoded = require('form-urlencoded').default;
+    formurlencoded = require('form-urlencoded').default,
+    date = require('date-and-time');
 
 exports.bookingids = function(req, rawBooking){
   var payload = [];
@@ -24,8 +24,8 @@ exports.booking = function(accept, rawBooking){
       'totalprice' : parseInt(rawBooking.totalprice),
       'depositpaid' : Boolean(rawBooking.depositpaid),
       'bookingdates' : {
-        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+        'checkin' : date.format(new Date(rawBooking.bookingdates.checkin),'YYYY-MM-DD'),
+        'checkout' : date.format(new Date(rawBooking.bookingdates.checkout), 'YYYY-MM-DD'),
       }
     }
 
@@ -62,8 +62,8 @@ exports.bookingWithId = function(req, rawBooking){
       'totalprice' : parseInt(rawBooking.totalprice),
       'depositpaid' : Boolean(rawBooking.depositpaid),
       'bookingdates' : {
-        'checkin' : dateFormat(rawBooking.bookingdates.checkin, "yyyy-mm-dd"),
-        'checkout' : dateFormat(rawBooking.bookingdates.checkout, "yyyy-mm-dd")
+        'checkin' : date.format(new Date(rawBooking.bookingdates.checkin),'YYYY-MM-DD'),
+        'checkout' : date.format(new Date(rawBooking.bookingdates.checkout), 'YYYY-MM-DD'),
       }
     }
   

@@ -8,27 +8,27 @@
     "build_docs": "apidoc -i ./routes/ -o public/apidoc/"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "^1.4.6",
     "cross-env": "^7.0.3",
-    "dateformat": "^3.0.3",
-    "debug": "^4.3.1",
-    "express": "^4.17.1",
+    "date-and-time": "^2.4.1",
+    "debug": "^4.3.4",
+    "express": "^4.18.2",
     "express-xml-bodyparser": "^0.3.0",
-    "form-urlencoded": "^4.2.1",
-    "honeycomb-beeline": "^2.7.1",
-    "js2xmlparser": "^4.0.1",
+    "form-urlencoded": "^6.1.0",
+    "honeycomb-beeline": "^4.0.0",
+    "js2xmlparser": "^5.0.0",
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",
-    "pug": "^3.0.1",
-    "universal-analytics": "^0.4.23",
-    "uuid": "^8.3.1",
+    "pug": "^3.0.2",
+    "universal-analytics": "^0.5.3",
+    "uuid": "^9.0.0",
     "validate.js": "^0.13.1",
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^8.2.1",
-    "supertest": "^4.0.2"
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0",
+    "supertest": "^6.3.1"
   }
 }

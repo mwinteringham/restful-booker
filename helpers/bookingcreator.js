@@ -1,4 +1,4 @@
-var dateFormat = require('dateformat');
+date = require('date-and-time');
 
 var randomiseDate = function(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -37,8 +37,8 @@ exports.createBooking = function(){
     totalprice: randomiseNumber(100,1000),
     depositpaid: randomiseBool(),
     bookingdates: {
-      checkin: dateFormat(checkInDate.setHours(15,0,0,0), "yyyy-mm-dd"),
-      checkout: dateFormat(randomiseDate(checkInDate,latestDate).setHours(12,0,0,0), "yyyy-mm-dd")
+      checkin: date.format(new Date(checkInDate.setHours(15,0,0,0)),'YYYY-MM-DD'),
+      checkout: date.format(new Date(randomiseDate(checkInDate,latestDate).setHours(12,0,0,0)),'YYYY-MM-DD')
     }
   }
 
