@@ -675,17 +675,17 @@ define({ "api": [
     "examples": [
       {
         "title": "JSON example usage:",
-        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -H 'Cookie: token=abc123' \\\n  -d '{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\"\n}'",
+        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -H 'Cookie: token=abc123' \\\n  -d '{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\"\n}'",
         "type": "json"
       },
       {
         "title": "XML example usage:",
-        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
+        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
         "type": "json"
       },
       {
         "title": "URLencoded example usage:",
-        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
+        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
         "type": "json"
       }
     ],
