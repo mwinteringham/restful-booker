@@ -300,7 +300,7 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Cookie",
-            "defaultValue": "token=<token_value>",
+            "defaultValue": "token=&lt;token_value&gt;",
             "description": "<p>Sets an authorisation token to access the DELETE endpoint, can be used as an alternative to the Authorisation</p>"
           },
           {
@@ -658,7 +658,7 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Cookie",
-            "defaultValue": "token=<token_value>",
+            "defaultValue": "token=&lt;token_value&gt;",
             "description": "<p>Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation</p>"
           },
           {
@@ -867,7 +867,7 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Cookie",
-            "defaultValue": "token=<token_value>",
+            "defaultValue": "token=&lt;token_value&gt;",
             "description": "<p>Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation</p>"
           },
           {

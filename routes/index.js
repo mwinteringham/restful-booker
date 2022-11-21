@@ -355,7 +355,7 @@ router.post('/booking', function(req, res, next) {
  * 
  * @apiHeader {string} Content-Type=application/json                    Sets the format of payload you are sending. Can be application/json or text/xml
  * @apiHeader {string} Accept=application/json                          Sets what format the response body is returned in. Can be application/json or application/xml
- * @apiHeader {string} [Cookie=token=<token_value>]                     Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation
+ * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation
  * @apiHeader {string} [Authorisation=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample JSON example usage:
@@ -498,7 +498,7 @@ router.put('/booking/:id', function(req, res, next) {
  * 
  * @apiHeader {string} Content-Type=application/json                    Sets the format of payload you are sending. Can be application/json or text/xml
  * @apiHeader {string} Accept=application/json                          Sets what format the response body is returned in. Can be application/json or application/xml
- * @apiHeader {string} [Cookie=token=<token_value>]                     Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation
+ * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation
  * @apiHeader {string} [Authorisation=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample JSON example usage:
@@ -612,7 +612,7 @@ router.patch('/booking/:id', function(req, res) {
  *
  * @apiParam (Url Parameter) {Number} id  ID for the booking you want to update
  * 
- * @apiHeader {string} [Cookie=token=<token_value>]                     Sets an authorisation token to access the DELETE endpoint, can be used as an alternative to the Authorisation
+ * @apiHeader {string} [Cookie=token=&lt;token_value&gt;]                     Sets an authorisation token to access the DELETE endpoint, can be used as an alternative to the Authorisation
  * @apiHeader {string} [Authorisation=Basic YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the DELETE endpoint, can be used as an alternative to the Cookie header
  * 
  * @apiExample Example 1 (Cookie):
