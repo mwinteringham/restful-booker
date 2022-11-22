@@ -308,8 +308,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+            "description": "<p>Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -666,8 +666,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -875,8 +875,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
