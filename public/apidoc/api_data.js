@@ -301,15 +301,15 @@ define({ "api": [
             "optional": true,
             "field": "Cookie",
             "defaultValue": "token=&lt;token_value&gt;",
-            "description": "<p>Sets an authorisation token to access the DELETE endpoint, can be used as an alternative to the Authorisation</p>"
+            "description": "<p>Sets an authorization token to access the DELETE endpoint, can be used as an alternative to the Authorization</p>"
           },
           {
             "group": "Header",
             "type": "string",
             "optional": true,
-            "field": "Authorisation",
+            "field": "Authorization",
             "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -322,7 +322,7 @@ define({ "api": [
       },
       {
         "title": "Example 2 (Basic auth):",
-        "content": "curl -X DELETE \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM='",
+        "content": "curl -X DELETE \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM='",
         "type": "json"
       }
     ],
@@ -659,15 +659,15 @@ define({ "api": [
             "optional": true,
             "field": "Cookie",
             "defaultValue": "token=&lt;token_value&gt;",
-            "description": "<p>Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation</p>"
+            "description": "<p>Sets an authorization token to access the PUT endpoint, can be used as an alternative to the Authorization</p>"
           },
           {
             "group": "Header",
             "type": "string",
             "optional": true,
-            "field": "Authorisation",
+            "field": "Authorization",
             "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -680,12 +680,12 @@ define({ "api": [
       },
       {
         "title": "XML example usage:",
-        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
+        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
         "type": "json"
       },
       {
         "title": "URLencoded example usage:",
-        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
+        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
         "type": "json"
       }
     ],
@@ -868,15 +868,15 @@ define({ "api": [
             "optional": true,
             "field": "Cookie",
             "defaultValue": "token=&lt;token_value&gt;",
-            "description": "<p>Sets an authorisation token to access the PUT endpoint, can be used as an alternative to the Authorisation</p>"
+            "description": "<p>Sets an authorization token to access the PUT endpoint, can be used as an alternative to the Authorization</p>"
           },
           {
             "group": "Header",
             "type": "string",
             "optional": true,
-            "field": "Authorisation",
+            "field": "Authorization",
             "defaultValue": "Basic",
-            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorisation header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -889,12 +889,12 @@ define({ "api": [
       },
       {
         "title": "XML example usage:",
-        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n    <totalprice>111</totalprice>\n    <depositpaid>true</depositpaid>\n    <bookingdates>\n      <checkin>2018-01-01</checkin>\n      <checkout>2019-01-01</checkout>\n    </bookingdates>\n    <additionalneeds>Breakfast</additionalneeds>\n  </booking>'",
+        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n    <totalprice>111</totalprice>\n    <depositpaid>true</depositpaid>\n    <bookingdates>\n      <checkin>2018-01-01</checkin>\n      <checkout>2019-01-01</checkout>\n    </bookingdates>\n    <additionalneeds>Breakfast</additionalneeds>\n  </booking>'",
         "type": "json"
       },
       {
         "title": "URLencoded example usage:",
-        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorisation: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'",
+        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2018-01-02'",
         "type": "json"
       }
     ],
