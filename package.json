@@ -16,7 +16,6 @@
     "express": "^4.18.2",
     "express-xml-bodyparser": "^0.3.0",
     "form-urlencoded": "^6.1.0",
-    "honeycomb-beeline": "^4.0.0",
     "js2xmlparser": "^5.0.0",
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",

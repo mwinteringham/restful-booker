@@ -1,9 +1,3 @@
-require("honeycomb-beeline")({
-  writeKey: process.env.HONEYCOMB_API,
-  dataset: "restful-booker",
-  serviceName: "restful-booker"
-});
-
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
