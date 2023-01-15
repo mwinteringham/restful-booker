@@ -1,20 +1,20 @@
-var express = require('express');
-var router  = express.Router(),
-    parse   = require('../helpers/parser'),
+const express = require('express');
+const router = express.Router(),
+    parse = require('../helpers/parser'),
     crypto = require('crypto'),
     Booking = require('../models/booking'),
     validator = require('../helpers/validator'),
     creator = require('../helpers/bookingcreator'),
-    ua      = require('universal-analytics');
-    globalLogins = {};
+    ua = require('universal-analytics');
+globalLogins = {};
 
 const { v4: uuidv4 } = require('uuid');
 
 if(process.env.SEED === 'true'){
-  var count = 1;
+  let count = 1;
 
   (function createBooking(){
-    var newBooking = creator.createBooking()
+    const newBooking = creator.createBooking();
 
     Booking.create(newBooking, function(err, result){
       if(err) return console.error(err);
@@ -27,7 +27,7 @@ if(process.env.SEED === 'true'){
   })()
 };
 
-var visitor = ua('UA-118712228-2', uuidv4());
+const visitor = ua('UA-118712228-2', uuidv4());
 
 /**
  * @api {get} ping HealthCheck
@@ -97,7 +97,7 @@ router.get('/booking', function(req, res, next) {
   visitor.set('uid', uuidv4());
   visitor.pageview('/booking', 'https://restful-booker.herokuapp.com/', "GET /booking").send();
 
-  var query = {};
+  const query = {};
 
   if(typeof(req.query.firstname) != 'undefined'){
     query.firstname = req.query.firstname
@@ -116,7 +116,7 @@ router.get('/booking', function(req, res, next) {
   }
 
   Booking.getIDs(query, function(err, record){
-    var booking = parse.bookingids(req, record);
+    const booking = parse.bookingids(req, record);
 
     if(!booking){
       res.sendStatus(418);
@@ -189,7 +189,7 @@ router.get('/booking/:id',function(req, res, next){
 
   Booking.get(req.params.id, function(err, record){
     if(record){
-      var booking = parse.booking(req.headers.accept, record);
+      const booking = parse.booking(req.headers.accept, record);
 
       if(!booking){
         res.sendStatus(418);
@@ -321,7 +321,7 @@ router.post('/booking', function(req, res, next) {
         if(err)
           res.sendStatus(500);
         else {
-          var record = parse.bookingWithId(req, booking);
+          const record = parse.bookingWithId(req, booking);
 
           if(!record){
             res.sendStatus(418);
@@ -458,7 +458,7 @@ router.put('/booking/:id', function(req, res, next) {
         Booking.update(req.params.id, updatedBooking, function(err){
           Booking.get(req.params.id, function(err, record){
             if(record){
-              var booking = parse.booking(req.headers.accept, record);
+              const booking = parse.booking(req.headers.accept, record);
 
               if(!booking){
                 res.sendStatus(418);
@@ -586,7 +586,7 @@ router.patch('/booking/:id', function(req, res) {
     Booking.update(req.params.id, updatedBooking, function(err){
       Booking.get(req.params.id, function(err, record){
         if(record){
-          var booking = parse.booking(req.headers.accept, record);
+          const booking = parse.booking(req.headers.accept, record);
 
           if(!booking){
             res.sendStatus(500);
@@ -685,9 +685,9 @@ router.post('/auth', function(req, res, next){
   visitor.pageview('/auth', 'https://restful-booker.herokuapp.com/', "POST /auth").send();
 
   if(req.body.username === "admin" && req.body.password === "password123"){
-    var token = crypto.randomBytes(Math.ceil(15/2))
-                    .toString('hex')
-                    .slice(0,15);
+    const token = crypto.randomBytes(Math.ceil(15 / 2))
+        .toString('hex')
+        .slice(0, 15);
 
     globalLogins[token] = true;
 

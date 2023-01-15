@@ -3,9 +3,9 @@ FROM node:lts
 # Copy restful-booker across
 RUN mkdir /restful-booker
 
-COPY ./ /restful-booker/
-
 WORKDIR /restful-booker
+
+COPY ./ ./
 
 RUN npm install
 

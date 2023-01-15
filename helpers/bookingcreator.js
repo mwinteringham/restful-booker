@@ -1,46 +1,46 @@
 date = require('date-and-time');
 
-var randomiseDate = function(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+const randomiseDate = function (start, end) {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
-var randomiseNumber = function(from, to){
-    return Math.floor(Math.random() * (to - from + 1) + from);
+const randomiseNumber = function (from, to) {
+  return Math.floor(Math.random() * (to - from + 1) + from);
 };
 
-var randomiseFirstName = function(){
-  var name = ["Mark","Mary","Sally","Jim","Eric","Susan"]
+const randomiseFirstName = function () {
+  const name = ["Mark", "Mary", "Sally", "Jim", "Eric", "Susan"];
 
-  return name[randomiseNumber(0,name.length - 1)];  
+  return name[randomiseNumber(0, name.length - 1)];
 };
 
-var randomiseLastName = function(){
-  var surname = ["Jones","Wilson","Jackson","Brown","Smith","Ericsson"]
+const randomiseLastName = function () {
+  const surname = ["Jones", "Wilson", "Jackson", "Brown", "Smith", "Ericsson"];
 
-  return surname[randomiseNumber(0,surname.length - 1)];  
+  return surname[randomiseNumber(0, surname.length - 1)];
 };
 
-var randomiseBool = function(){
-  var bool = [true,false]
+const randomiseBool = function () {
+  const bool = [true, false];
 
-  return bool[randomiseNumber(0,bool.length - 1)];
+  return bool[randomiseNumber(0, bool.length - 1)];
 };
 
 exports.createBooking = function(){
-  var checkInDate = randomiseDate(new Date(2015, 1, 1), new Date())
-  var latestDate = new Date()
+  const checkInDate = randomiseDate(new Date(2015, 1, 1), new Date());
+  const latestDate = new Date();
   latestDate.setDate(latestDate.getDate() + 3)
 
-  var booking = {
+  const booking = {
     firstname: randomiseFirstName(),
     lastname: randomiseLastName(),
-    totalprice: randomiseNumber(100,1000),
+    totalprice: randomiseNumber(100, 1000),
     depositpaid: randomiseBool(),
     bookingdates: {
-      checkin: date.format(new Date(checkInDate.setHours(15,0,0,0)),'YYYY-MM-DD'),
-      checkout: date.format(new Date(randomiseDate(checkInDate,latestDate).setHours(12,0,0,0)),'YYYY-MM-DD')
+      checkin: date.format(new Date(checkInDate.setHours(15, 0, 0, 0)), 'YYYY-MM-DD'),
+      checkout: date.format(new Date(randomiseDate(checkInDate, latestDate).setHours(12, 0, 0, 0)), 'YYYY-MM-DD')
     }
-  }
+  };
 
   if(randomiseBool()){
     booking.additionalneeds = "Breakfast";

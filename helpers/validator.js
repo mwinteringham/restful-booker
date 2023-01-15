@@ -1,4 +1,4 @@
-var rules    = require('../helpers/validationrules'),
+const rules = require('../helpers/validationrules'),
     validate = require('validate.js');
 
 exports.scrubAndValidate = function(payload, callback){
