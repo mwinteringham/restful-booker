@@ -1,35 +1,35 @@
-var request      = require('supertest'),
-    expect       = require('chai').expect,
-    should       = require('chai').should(),
+const request = require('supertest'),
+    expect = require('chai').expect,
+    should = require('chai').should(),
     js2xmlparser = require("js2xmlparser"),
-    assert       = require('assert'),
-    Booking      = require('../models/booking'),
-    xml2js       = require('xml2js').parseString;
+    assert = require('assert'),
+    Booking = require('../models/booking'),
+    xml2js = require('xml2js').parseString;
 
-var generatePayload = function(firstname, lastname, totalprice, depositpaid, additionalneeds, checkin, checkout){
-  var payload = {
-      'firstname': firstname,
-      'lastname': lastname,
-      'totalprice': totalprice,
-      'depositpaid': depositpaid,
-      'bookingdates': {
-        'checkin': checkin,
-        'checkout': checkout
-      }
+const generatePayload = function (firstname, lastname, totalprice, depositpaid, additionalneeds, checkin, checkout) {
+  const payload = {
+    'firstname': firstname,
+    'lastname': lastname,
+    'totalprice': totalprice,
+    'depositpaid': depositpaid,
+    'bookingdates': {
+      'checkin': checkin,
+      'checkout': checkout
     }
+  };
 
-  if(typeof(additionalneeds) !== 'undefined'){
+  if (typeof (additionalneeds) !== 'undefined') {
     payload.additionalneeds = additionalneeds;
   }
 
   return payload
-}
+};
 
-var payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-04'),
+const payload  = generatePayload('Sally', 'Brown', 111, true, 'Breakfast', '2013-02-01', '2013-02-04'),
     payload2 = generatePayload('Geoff', 'White', 111, true, 'Breakfast', '2013-02-02', '2013-02-05'),
     payload3 = generatePayload('Bob', 'Brown', 111, true, 'Breakfast', '2013-02-03', '2013-02-06');
 
-var server = require('../app')
+const server = require('../app');
 
 describe('restful-booker', function () {
 
@@ -254,7 +254,7 @@ describe('restful-booker - POST /booking', function () {
   });
 
   it('responds with the created booking and assigned booking id when sent an XML payload', function testCreateBooking(done){
-    var xmlPayload = js2xmlparser.parse('booking', payload)
+    const xmlPayload = js2xmlparser.parse('booking', payload);
 
     request(server)
       .post('/booking')
@@ -296,7 +296,7 @@ describe('restful-booker - POST /booking', function () {
   });
 
   it('responds with an XML payload when POST /booking with accept application/xml', function testGetWithXMLAccept(done){
-    var xmlPayload = js2xmlparser.parse('created-booking', { "bookingid": 1, "booking": payload2 })
+    const xmlPayload = js2xmlparser.parse('created-booking', {"bookingid": 1, "booking": payload2});
 
     parseBooleans = function(str) {
       if (/^(?:true|false)$/i.test(str)) {
@@ -327,7 +327,7 @@ describe('restful-booker - POST /booking', function () {
   });
 
   it('responds with a 200 when a payload with too many params are sent', function testCreateExtraPayload(done){
-    var extraPayload = payload
+    const extraPayload = payload;
     extraPayload.extra = 'bad'
 
     request(server)
@@ -445,7 +445,7 @@ describe('restful-booker - PUT /booking', function () {
   })
 
   it('responds with a 200 and an updated payload when requesting with an XML', function testUpdatingABookingWithXML(done){
-    var xmlPayload = js2xmlparser.parse('booking', payload2)
+    const xmlPayload = js2xmlparser.parse('booking', payload2);
 
     request(server)
       .post('/booking')

@@ -1,8 +1,7 @@
-var Datastore = require('nedb');
-var db = new Datastore();
-var counter = 0;
+const Datastore = require('nedb');
+let counter = 0;
 
-var booking = new Datastore();
+const booking = new Datastore();
 
 exports.getIDs = function(query, callback){
   booking.find(query, function(err, booking){
