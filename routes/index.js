@@ -5,7 +5,6 @@ const router = express.Router(),
     Booking = require('../models/booking'),
     validator = require('../helpers/validator'),
     creator = require('../helpers/bookingcreator'),
-    ua = require('universal-analytics');
 globalLogins = {};
 
 const { v4: uuidv4 } = require('uuid');
@@ -27,8 +26,6 @@ if(process.env.SEED === 'true'){
   })()
 };
 
-const visitor = ua('UA-118712228-2', uuidv4());
-
 /**
  * @api {get} ping HealthCheck
  * @apiName Ping
@@ -45,9 +42,6 @@ const visitor = ua('UA-118712228-2', uuidv4());
  *     HTTP/1.1 201 Created
  */
 router.get('/ping', function(req, res, next) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/ping', 'https://restful-booker.herokuapp.com/', "GET /Ping").send();
-
   res.sendStatus(201);
 });
 
@@ -94,9 +88,6 @@ router.get('/ping', function(req, res, next) {
 ] 
 */
 router.get('/booking', function(req, res, next) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking', 'https://restful-booker.herokuapp.com/', "GET /booking").send();
-
   const query = {};
 
   if(typeof(req.query.firstname) != 'undefined'){
@@ -184,9 +175,6 @@ router.get('/booking', function(req, res, next) {
  * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.get('/booking/:id',function(req, res, next){
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking/:id', 'https://restful-booker.herokuapp.com/', "GET /booking/:id").send();
-
   Booking.get(req.params.id, function(err, record){
     if(record){
       const booking = parse.booking(req.headers.accept, record);
@@ -309,9 +297,6 @@ router.get('/booking/:id',function(req, res, next){
  * bookingid=1&booking%5Bfirstname%5D=Jim&booking%5Blastname%5D=Brown&booking%5Btotalprice%5D=111&booking%5Bdepositpaid%5D=true&booking%5Bbookingdates%5D%5Bcheckin%5D=2018-01-01&booking%5Bbookingdates%5D%5Bcheckout%5D=2019-01-01
  */
 router.post('/booking', function(req, res, next) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking', 'https://restful-booker.herokuapp.com/', "POST /booking").send();
-
   newBooking = req.body;
   if(req.headers['content-type'] === 'text/xml') newBooking = newBooking.booking;
 
@@ -446,9 +431,6 @@ router.post('/booking', function(req, res, next) {
  * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.put('/booking/:id', function(req, res, next) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking/:id', 'https://restful-booker.herokuapp.com/', "PUT /booking/:id").send();
-
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
     updatedBooking = req.body;
     if(req.headers['content-type'] === 'text/xml') updatedBooking = updatedBooking.booking;
@@ -575,9 +557,6 @@ router.put('/booking/:id', function(req, res, next) {
  * firstname=Jim&lastname=Brown&totalprice=111&depositpaid=true&bookingdates%5Bcheckin%5D=2018-01-01&bookingdates%5Bcheckout%5D=2019-01-01
  */
 router.patch('/booking/:id', function(req, res) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking/:id', 'https://restful-booker.herokuapp.com/', "DELETE /booking/:id").send();
-
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
     updatedBooking = req.body;
 
@@ -633,9 +612,6 @@ router.patch('/booking/:id', function(req, res) {
  *     HTTP/1.1 201 Created
 */
 router.delete('/booking/:id', function(req, res, next) {
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/booking/:id', 'https://restful-booker.herokuapp.com/', "DELETE /booking/:id").send();
-
   if(globalLogins[req.cookies.token] || req.headers.authorization == 'Basic YWRtaW46cGFzc3dvcmQxMjM='){
     Booking.get(req.params.id, function(err, record){
       if(record){
@@ -681,9 +657,6 @@ router.delete('/booking/:id', function(req, res, next) {
 }
  */
 router.post('/auth', function(req, res, next){
-  visitor.set('uid', uuidv4());
-  visitor.pageview('/auth', 'https://restful-booker.herokuapp.com/', "POST /auth").send();
-
   if(req.body.username === "admin" && req.body.password === "password123"){
     const token = crypto.randomBytes(Math.ceil(15 / 2))
         .toString('hex')

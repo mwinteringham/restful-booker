@@ -20,7 +20,6 @@
     "morgan": "^1.10.0",
     "nedb": "^1.8.0",
     "pug": "^3.0.2",
-    "universal-analytics": "^0.5.3",
     "uuid": "^9.0.0",
     "validate.js": "^0.13.1",
     "xml2js": "^0.4.23"
