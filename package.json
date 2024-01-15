@@ -26,7 +26,11 @@
   },
   "devDependencies": {
     "chai": "^4.3.7",
+    "cypress": "^13.6.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "mocha": "^10.1.0",
+    "prettier": "3.2.2",
     "supertest": "^6.3.1"
   }
 }
