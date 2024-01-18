@@ -1,5 +1,5 @@
 describe("Ping spec", () => {
-  it("passes", () => {
+  it("Ping is successful", () => {
     cy.request("/ping")
       .its("status")
       .should("be.greaterThan", 199)
