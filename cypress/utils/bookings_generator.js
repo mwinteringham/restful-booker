@@ -45,8 +45,6 @@ let lastNames = [
 ];
 
 let needs = ["breakfast", "lunch", "early checkin", "late checkout", null];
-// generate needs string
-// generate bookings object
 
 const bookings_generator = {
   generate_firstname: function () {
