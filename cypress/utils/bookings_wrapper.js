@@ -15,6 +15,21 @@ const bookings_wrapper = {
     });
   },
 
+  get_all_bookings: function (options = { failOnStatusCode: true }) {
+    return cy.request({
+      url: "/booking",
+      failOnStatusCode: options.failOnStatusCode,
+    });
+  },
+
+  get_booking_by: function (queryParams, options = { failOnStatusCode: true }) {
+    return cy.request({
+      url: "/booking",
+      qs: queryParams,
+      failOnStatusCode: options.failOnStatusCode,
+    });
+  },
+
   delete_booking: function (bookingid, options = { token: null }) {
     return cy.request({
       method: "DELETE",

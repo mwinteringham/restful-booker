@@ -1,3 +1,5 @@
+import bookings_helpers from "../utils/bookings_helpers";
+
 let firstNames = [
   "Emily",
   "Michael",
@@ -67,23 +69,13 @@ const bookings_generator = {
     const checkin = new Date();
     checkin.setDate(checkin.getDate() + Cypress._.random(1, 180));
     cy.log("checkin: " + checkin.toDateString());
-    let checkinString =
-      checkin.getFullYear() +
-      "-" +
-      ("0" + (checkin.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("0" + checkin.getDate()).slice(-2);
+    let checkinString = bookings_helpers.convertToBookingDateString(checkin);
     cy.log("checkinString: " + checkinString);
     const checkout = new Date(
       checkin.setDate(checkin.getDate() + Cypress._.random(1, 14)),
     );
     cy.log("checkout: " + checkout.toDateString());
-    let checkoutString =
-      checkout.getFullYear() +
-      "-" +
-      ("0" + (checkout.getMonth() + 1)).slice(-2) +
-      "-" +
-      ("0" + checkout.getDate()).slice(-2);
+    let checkoutString = bookings_helpers.convertToBookingDateString(checkout);
     cy.log("checkoutString: " + checkoutString);
     const bookingdates = {
       checkin: checkinString,
