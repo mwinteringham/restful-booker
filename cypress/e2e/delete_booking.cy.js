@@ -3,7 +3,7 @@ import bookings_wrapper from "../utils/bookings_wrapper";
 
 describe("Delete booking spec", () => {
   let temp_token;
-  beforeEach(() => {
+  before(() => {
     bookings_wrapper.create_auth("admin", "password123").then((response) => {
       temp_token = response.body.token;
       cy.log("temp_token: " + temp_token);

@@ -50,6 +50,22 @@ const bookings_wrapper = {
       },
     });
   },
+
+  update_booking: function (
+    bookingid,
+    updatedbooking,
+    options = { failOnStatusCode: true, token: null },
+  ) {
+    return cy.request({
+      method: "PUT",
+      url: `/booking/${bookingid}`,
+      failOnStatusCode: options.failOnStatusCode,
+      headers: {
+        Cookie: `token=${options.token}`,
+      },
+      body: updatedbooking,
+    });
+  },
 };
 
 export default bookings_wrapper;
