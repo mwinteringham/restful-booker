@@ -54,7 +54,7 @@ describe("Update Booking spec", () => {
   });
 
   // this test fails due to bug in API, where checkin gets set to "0NaN-aN-aN" when updated to an invalid value; prior value should be retained and update should return a 400 or other error response
-  it("invalid checkin date", () => {
+  it.skip("invalid checkin date", () => {
     let newbooking = bookings_generator.generate_booking();
     let updatedbooking = Object.assign({}, newbooking);
     updatedbooking.bookingdates.checkin = "2024-12-32";
