@@ -66,6 +66,22 @@ const bookings_wrapper = {
       body: updatedbooking,
     });
   },
+
+  update_partial_booking: function (
+    bookingid,
+    partialbooking,
+    options = { failOnStatusCode: true, token: null },
+  ) {
+    return cy.request({
+      method: "PATCH",
+      url: `/booking/${bookingid}`,
+      failOnStatusCode: options.failOnStatusCode,
+      headers: {
+        Cookie: `token=${options.token}`,
+      },
+      body: partialbooking,
+    });
+  },
 };
 
 export default bookings_wrapper;
