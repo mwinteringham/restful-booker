@@ -1,9 +1,6 @@
-# restful-booker
-A simple Node booking form for testing RESTful web services.
+# restful-booker-cypress-js
+Cypress automation suite for the simple Node booking RESTful web services.
 
-# Requirements
-- Docker 17.09.0
-- Docker Compose 1.16.1
 
 # Installation
 1. Ensure mongo is up and running by executing ```mongod``` in your terminal
