@@ -1,5 +1,5 @@
 # restful-booker-cypress-js
-Cypress automation suite for the simple Node booking RESTful web services.
+Cypress automation suite for the simple Node booking RESTful web services. Refer to original repo at https://github.com/mwinteringham/restful-booker for more info on the API.
 
 
 # Installation
