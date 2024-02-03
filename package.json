@@ -25,6 +25,7 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.4.0",
     "chai": "^4.3.7",
     "cypress": "^13.6.2",
     "eslint": "^8.56.0",

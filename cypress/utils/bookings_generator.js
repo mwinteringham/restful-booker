@@ -1,4 +1,5 @@
 import bookings_helpers from "../utils/bookings_helpers";
+import { faker } from "@faker-js/faker";
 
 let firstNames = [
   "Emily",
@@ -49,30 +50,46 @@ let lastNames = [
 let needs = ["breakfast", "lunch", "early checkin", "late checkout", null];
 
 const bookings_generator = {
-  generate_firstname: function () {
-    return firstNames[Cypress._.random(firstNames.length - 1)];
+  generate_firstname: function (useFaker = false) {
+    return useFaker
+      ? faker.person.firstName()
+      : firstNames[Cypress._.random(firstNames.length - 1)];
   },
 
-  generate_lastname: function () {
-    return lastNames[Cypress._.random(lastNames.length - 1)];
+  generate_lastname: function (useFaker = false) {
+    return useFaker
+      ? faker.person.lastName()
+      : lastNames[Cypress._.random(lastNames.length - 1)];
   },
 
-  generate_price: function () {
-    return Cypress._.random(50, 250);
+  generate_price: function (useFaker = false) {
+    return useFaker
+      ? faker.number.int({ min: 50, max: 250 })
+      : Cypress._.random(50, 250);
   },
 
-  generate_boolean: function () {
-    return Cypress._.random(1) === 1;
+  generate_boolean: function (useFaker = false) {
+    return useFaker ? faker.datatype.boolean() : Cypress._.random(1) === 1;
   },
 
-  generate_bookingdates: function () {
+  generate_bookingdates: function (useFaker = false) {
     const checkin = new Date();
-    checkin.setDate(checkin.getDate() + Cypress._.random(1, 180));
+    checkin.setDate(
+      checkin.getDate() +
+        (useFaker
+          ? faker.number.int({ min: 1, max: 180 })
+          : Cypress._.random(1, 180)),
+    );
     cy.log("checkin: " + checkin.toDateString());
     let checkinString = bookings_helpers.convertToBookingDateString(checkin);
     cy.log("checkinString: " + checkinString);
     const checkout = new Date(
-      checkin.setDate(checkin.getDate() + Cypress._.random(1, 14)),
+      checkin.setDate(
+        checkin.getDate() +
+          (useFaker
+            ? faker.number.int({ min: 1, max: 14 })
+            : Cypress._.random(1, 14)),
+      ),
     );
     cy.log("checkout: " + checkout.toDateString());
     let checkoutString = bookings_helpers.convertToBookingDateString(checkout);
@@ -85,18 +102,20 @@ const bookings_generator = {
     return bookingdates;
   },
 
-  generate_additionalneeds: function () {
-    return needs[Cypress._.random(needs.length - 1)];
+  generate_additionalneeds: function (useFaker = false) {
+    return useFaker
+      ? faker.helpers.arrayElement(needs)
+      : needs[Cypress._.random(needs.length - 1)];
   },
 
-  generate_booking: function () {
+  generate_booking: function (useFaker = false) {
     const booking = {
-      firstname: this.generate_firstname(),
-      lastname: this.generate_lastname(),
-      depositpaid: this.generate_boolean(),
-      totalprice: this.generate_price(),
-      bookingdates: this.generate_bookingdates(),
-      additionalneeds: this.generate_additionalneeds(),
+      firstname: this.generate_firstname(useFaker),
+      lastname: this.generate_lastname(useFaker),
+      depositpaid: this.generate_boolean(useFaker),
+      totalprice: this.generate_price(useFaker),
+      bookingdates: this.generate_bookingdates(useFaker),
+      additionalneeds: this.generate_additionalneeds(useFaker),
     };
     return booking;
   },
