@@ -1,6 +1,10 @@
 # restful-booker-cypress-js
 Cypress automation suite for the simple Node booking RESTful web services. Refer to original repo at https://github.com/mwinteringham/restful-booker for more info on the API.
-
+This automation suite demonstrates:
+* Testing most common HTTP verb APIs: GET, POST, PATCH, PUT, and DELETE
+* Verifying status reponse and body contents
+* Basic custom input generators
+* Use of fakerJS for more extensive input generation 
 
 # Installation
 1. Ensure mongo is up and running by executing ```mongod``` in your terminal
