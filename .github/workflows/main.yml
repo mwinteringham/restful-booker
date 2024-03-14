@@ -1,4 +1,4 @@
-name: End-to-end tests
+name: API tests
 on: push
 jobs:
   cypress-run:
@@ -6,7 +6,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          # quote the url to be safe against YML parsing surprises
+          wait-on: "http://localhost:3001"
