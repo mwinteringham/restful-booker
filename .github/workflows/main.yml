@@ -1,4 +1,4 @@
-name: API tests
+name: Run API tests
 on: push
 jobs:
   cypress-run:
