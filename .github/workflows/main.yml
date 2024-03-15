@@ -3,11 +3,15 @@ on: push
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
-    # Cypress Docker image from https://hub.docker.com/r/cypress
-    # with browsers pre-installed
-    container:
-      image: cypress/browsers:latest
-      options: --user 1001
+    strategy:
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving Cypress Cloud hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        # run 3 copies of the current job in parallel
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,6 +23,8 @@ jobs:
           # quote the url to be safe against YML parsing surprises
           wait-on: "http://localhost:3001"
           record: true
+          parallel: true
+          group: "Actions example"
         env:
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
