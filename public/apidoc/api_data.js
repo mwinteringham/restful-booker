@@ -278,7 +278,7 @@ define({ "api": [
     "name": "DeleteBooking",
     "group": "Booking",
     "version": "1.0.0",
-    "description": "<p>Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.</p>",
+    "description": "<p>Deletes a booking from the API. Requires an authorization token to be set in the header or a Basic auth header.</p>",
     "parameter": {
       "fields": {
         "Url Parameter": [
@@ -308,8 +308,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -666,8 +666,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -675,17 +675,17 @@ define({ "api": [
     "examples": [
       {
         "title": "JSON example usage:",
-        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -H 'Cookie: token=abc123' \\\n  -d '{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\"\n}'",
+        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/json' \\\n  -H 'Accept: application/json' \\\n  -H 'Cookie: token=abc123' \\\n  -d '{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\"\n}'",
         "type": "json"
       },
       {
         "title": "XML example usage:",
-        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
+        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: text/xml' \\\n  -H 'Accept: application/xml' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d '<booking>\n    <firstname>James</firstname>\n    <lastname>Brown</lastname>\n  </booking>'",
         "type": "json"
       },
       {
         "title": "URLencoded example usage:",
-        "content": "curl -X PATCH \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
+        "content": "curl -X PUT \\\n  https://restful-booker.herokuapp.com/booking/1 \\\n  -H 'Content-Type: application/x-www-form-urlencoded' \\\n  -H 'Accept: application/x-www-form-urlencoded' \\\n  -H 'Authorization: Basic YWRtaW46cGFzc3dvcmQxMjM=' \\\n  -d 'firstname=Jim&lastname=Brown'",
         "type": "json"
       }
     ],
@@ -875,8 +875,8 @@ define({ "api": [
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }

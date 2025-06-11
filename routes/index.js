@@ -587,7 +587,7 @@ router.patch('/booking/:id', function(req, res) {
  * @apiName DeleteBooking
  * @apiGroup Booking
  * @apiVersion 1.0.0
- * @apiDescription Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.
+ * @apiDescription Deletes a booking from the API. Requires an authorization token to be set in the header or a Basic auth header.
  *
  * @apiParam (Url Parameter) {Number} id  ID for the booking you want to update
  * 

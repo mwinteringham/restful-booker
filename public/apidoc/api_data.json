@@ -278,7 +278,7 @@
     "name": "DeleteBooking",
     "group": "Booking",
     "version": "1.0.0",
-    "description": "<p>Returns the ids of all the bookings that exist within the API. Can take optional query strings to search and return a subset of booking ids.</p>",
+    "description": "<p>Deletes a booking from the API. Requires an authorization token to be set in the header or a Basic auth header.</p>",
     "parameter": {
       "fields": {
         "Url Parameter": [
@@ -308,8 +308,8 @@
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the DELETE endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -666,8 +666,8 @@
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
@@ -875,8 +875,8 @@
             "type": "string",
             "optional": true,
             "field": "Authorization",
-            "defaultValue": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
-            "description": "<p>Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
+            "defaultValue": "Basic",
+            "description": "<p>YWRtaW46cGFzc3dvcmQxMjM=]   Basic authorization header to access the PUT endpoint, can be used as an alternative to the Cookie header</p>"
           }
         ]
       }
