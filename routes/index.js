@@ -99,11 +99,11 @@ router.get('/booking', function(req, res, next) {
   }
 
   if(typeof(req.query.checkin) != 'undefined'){
-    query["bookingdates.checkin"] = {$gt: new Date(req.query.checkin).toISOString()}
+    query["bookingdates.checkin"] = {$gte: new Date(req.query.checkin).toISOString()}
   }
 
   if(typeof(req.query.checkout) != 'undefined'){
-    query["bookingdates.checkout"] = {$lt: new Date(req.query.checkout).toISOString()}
+    query["bookingdates.checkout"] = {$lte: new Date(req.query.checkout).toISOString()}
   }
 
   Booking.getIDs(query, function(err, record){
