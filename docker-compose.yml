@@ -4,3 +4,11 @@ services:
     build: ./
     ports:
       - "3001:3001"
+    depends_on:
+      - mongodb
+    environment:
+      - BOOKER_DB_URL=mongodb://mongodb:27017
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
