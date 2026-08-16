@@ -20,4 +20,5 @@ Or you can run this via Docker:
 5. APIs are exposed on http://localhost:3001
 
 # API
-API details can be found on the [publically deployed version of Restful-Booker](https://restful-booker.herokuapp.com/).
+API details can be found on the [publically deployed version of Restful-Booker](https://restful-booker-api.onrender.com/).
+

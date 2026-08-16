@@ -3,7 +3,7 @@ define({
   "version": "1.0.0",
   "description": "API documentation for the playground API restful-booker. <a href='/' style='font-size: 24px'>Click here to go back to Home</a>",
   "title": "Restful-booker",
-  "url": "https://restful-booker.herokuapp.com/",
+  "url": "https://restful-booker-api.onrender.com/",
   "order": [
     "GetBookings",
     "GetBooking",
